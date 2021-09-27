@@ -37,6 +37,12 @@ struct Particle {
   Eigen::Vector2f loc;
   float angle;
   double weight;
+
+  public:
+    Particle(float x, float y, float theta) {
+      loc = Eigen::Vector2f(x,y);
+      angle = theta;
+    }
 };
 
 class ParticleFilter {
@@ -102,6 +108,8 @@ class ParticleFilter {
   Eigen::Vector2f prev_odom_loc_;
   float prev_odom_angle_;
   bool odom_initialized_;
+
+  const int num_initial_particles = 50;
 };
 }  // namespace slam
 

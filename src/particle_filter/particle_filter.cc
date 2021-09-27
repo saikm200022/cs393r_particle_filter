@@ -176,6 +176,14 @@ void ParticleFilter::Initialize(const string& map_file,
   // was received from the log. Initialize the particles accordingly, e.g. with
   // some distribution around the provided location and angle.
   map_.Load(map_file);
+
+  for (int i = 0; i < num_initial_particles; i++) {
+    float x = rng_.Gaussian(loc(0), .5);
+    float y = rng_.Gaussian(loc(1), .5);
+    float theta = rng_.Gaussian(angle, M_PI / 4);
+
+    particles_.emplace_back(x, y, theta);
+  }
 }
 
 void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr, 
