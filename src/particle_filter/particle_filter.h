@@ -109,7 +109,8 @@ class ParticleFilter {
   float prev_odom_angle_;
   bool odom_initialized_;
 
-  const int num_initial_particles = 50;
+  const int num_initial_particles = 25;
+  const int k = 25;
 };
 }  // namespace slam
 
