@@ -133,6 +133,7 @@ class ParticleFilter {
   // 1/n  -> perfect correlation (n = number of rays)
   double gamma = 1 / 500;
 
+  const int k = 25;
 };
 }  // namespace slam
 

@@ -251,9 +251,18 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // You will need to use the Gaussian random number generator provided. For
   // example, to generate a random number from a Gaussian with mean 0, and
   // standard deviation 2:
-  // float x = rng_.Gaussian(0.0, 2.0);
   // printf("Random number drawn from Gaussian distribution with 0 mean and "
   //        "standard deviation of 2 : %f\n", x);
+  for (unsigned int i = 0; i < particles_.size(); i++)
+  {
+    Particle particle = particles_[i];
+    float next_x = rng_.Gaussian(particle.loc[0] + odom_loc[0], k * odom_loc[0]);
+    float next_y = rng_.Gaussian(particle.loc[1] + odom_loc[1], k * odom_loc[0]);
+    float next_theta = rng_.Gaussian(particle.angle + odom_angle, k * abs(odom_angle));
+    particles_[i].loc[0] = next_x;
+    particles_[i].loc[1] = next_y;
+    particles_[i].angle = next_theta;
+  }
 }
 
 void ParticleFilter::Initialize(const string& map_file,
