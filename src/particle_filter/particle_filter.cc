@@ -61,6 +61,14 @@ void ParticleFilter::GetParticles(vector<Particle>* particles) const {
   *particles = particles_;
 }
 
+Eigen::Vector2f ParticleFilter::LaserScanToPoint(float angle, float distance) {
+    Eigen::Vector2f point;
+    point[0] = laser_x_offset + distance * cos(angle);
+    point[1] = distance * sin(angle);
+
+    return point;
+}
+
 void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
                                             const float angle,
                                             int num_ranges,
@@ -78,38 +86,36 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
 
   // Note: The returned values must be set using the `scan` variable:
   scan.resize(num_ranges);
-  // Fill in the entries of scan using array writes, e.g. scan[i] = ...
+
+  float angle_delta = (angle_max - angle_min) / num_ranges;
+  float theta = angle_min;
+
+  // Create the laser scan points
   for (size_t i = 0; i < scan.size(); ++i) {
-    scan[i] = Vector2f(0, 0);
-  }
+    // Initialize with max range
+    Vector2f point = LaserScanToPoint(range_max, theta);
 
-  // The line segments in the map are stored in the `map_.lines` variable. You
-  // can iterate through them as:
-  for (size_t i = 0; i < map_.lines.size(); ++i) {
-    const line2f map_line = map_.lines[i];
-    // The line2f class has helper functions that will be useful.
-    // You can create a new line segment instance as follows, for :
-    line2f my_line(1, 2, 3, 4); // Line segment from (1,2) to (3.4).
-    // Access the end points using `.p0` and `.p1` members:
-    printf("P0: %f, %f P1: %f,%f\n", 
-           my_line.p0.x(),
-           my_line.p0.y(),
-           my_line.p1.x(),
-           my_line.p1.y());
+    // compare with lines on map
+    // Optimize this with AABB if time permits
+    for (size_t i = 0; i < map_.lines.size(); ++i) {
+      const line2f map_line = map_.lines[i];
+      line2f scan_line(0, 0, point.x(), point.y());
 
-    // Check for intersections:
-    bool intersects = map_line.Intersects(my_line);
-    // You can also simultaneously check for intersection, and return the point
-    // of intersection:
-    Vector2f intersection_point; // Return variable
-    intersects = map_line.Intersection(my_line, &intersection_point);
-    if (intersects) {
-      printf("Intersects at %f,%f\n", 
-             intersection_point.x(),
-             intersection_point.y());
-    } else {
-      printf("No intersection\n");
+      bool intersects = map_line.Intersects(scan_line);
+
+      Vector2f intersection_point;
+      intersects = map_line.Intersection(scan_line, &intersection_point);
+
+      if (intersects) {
+        // Find the closest intersection that is outside the min range
+        if (intersection_point.norm() < point.norm() && intersection_point.norm() > range_min) {
+          point = intersection_point;
+        }
+      }
     }
+
+    scan[i] = point;
+    theta += angle_delta;
   }
 }
 
@@ -124,6 +130,72 @@ void ParticleFilter::Update(const vector<float>& ranges,
   // observations for each particle, and assign weights to the particles based
   // on the observation likelihood computed by relating the observation to the
   // predicted point cloud.
+
+  Particle p = *p_ptr;
+
+  // Get the scan that would be expected if the robot truly is at this location
+  vector<Vector2f> predicted_scan;
+  GetPredictedPointCloud(p.loc, p.angle, num_scans_predicted, range_min, range_max, angle_min, angle_max, &predicted_scan);
+  
+  // double likelihood = 1.0;
+
+  double log_likelihood = 0;
+
+  float angle_delta = (angle_max - angle_min) / ranges.size();
+  float angle = angle_min;
+
+  // Calculate for each point in point cloud
+  for (unsigned index = 0; index < ranges.size(); index++) {
+    Vector2f true_point = LaserScanToPoint(angle, ranges[index]);
+    Vector2f predicted_point = predicted_scan[index];
+
+    log_likelihood += pow(true_point.norm() - predicted_point.norm(), 2) / pow(update_variance, 2);
+
+    // Slide deck 7: 31-32
+    // Original:
+    // double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
+    // likelihood *= term;
+    angle += angle_delta;
+  }
+
+  p_ptr->weight = gamma * log_likelihood;
+
+}
+
+void ParticleFilter::NormalizeWeights() {
+  // This maybe needs to be readjusted bc log likelihood
+  double weight_sum = 0;
+  for (auto p : particles_) {
+    weight_sum += p.weight;
+  }
+
+  for (auto p : particles_) {
+    p.weight = p.weight / weight_sum;
+  }
+}
+
+int ParticleFilter::SearchBins(vector<float>& bins, float sample) {
+  // Does a binary search for the bin that the sample falls in
+  int upper = bins.size();
+  int lower = 0;
+  
+  int index = (lower + upper) / 2;
+  while (lower < upper) {
+    index = (lower + upper) / 2;
+    if (sample <= bins[index] && (index == 0 || sample > bins[index-1])) {
+      return index;
+    }
+
+    if (sample <= bins[index]) {
+      upper = index;
+    } 
+    else {
+      lower = index +1;
+    }
+  }
+
+  printf("forgot how to data structures");
+  return index;
 }
 
 void ParticleFilter::Resample() {
@@ -131,17 +203,23 @@ void ParticleFilter::Resample() {
   // The current particles are in the `particles_` variable. 
   // Create a variable to store the new particles, and when done, replace the
   // old set of particles:
-  // vector<Particle> new_particles';
-  // During resampling: 
-  //    new_particles.push_back(...)
-  // After resampling:
-  // particles_ = new_particles;
+  NormalizeWeights();
+  vector<Particle> new_particles;
 
-  // You will need to use the uniform random number generator provided. For
-  // example, to generate a random number between 0 and 1:
-  float x = rng_.UniformRandom(0, 1);
-  printf("Random number drawn from uniform distribution between 0 and 1: %f\n",
-         x);
+  vector<float> bins;
+  float running_sum = 0;
+  for (unsigned i = 0; i < particles_.size(); i++) {
+    running_sum += particles_[i].weight;
+    bins.push_back(running_sum);
+  }
+
+  for (unsigned i = 0; i < particles_.size(); i++) {
+    float sample = rng_.UniformRandom(0, 1);
+    int index = SearchBins(bins, sample);
+    new_particles.push_back(particles_[index]);
+  }
+
+  particles_ = new_particles;
 }
 
 void ParticleFilter::ObserveLaser(const vector<float>& ranges,
@@ -151,6 +229,15 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
                                   float angle_max) {
   // A new laser scan observation is available (in the laser frame)
   // Call the Update and Resample steps as necessary.
+
+  num_scans_predicted = ranges.size();
+
+  // Update the weights of the particles
+  for (auto p_ptr : particles_) {
+    Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
+  }
+
+  Resample();
 }
 
 void ParticleFilter::Predict(const Vector2f& odom_loc,
@@ -164,9 +251,9 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // You will need to use the Gaussian random number generator provided. For
   // example, to generate a random number from a Gaussian with mean 0, and
   // standard deviation 2:
-  float x = rng_.Gaussian(0.0, 2.0);
-  printf("Random number drawn from Gaussian distribution with 0 mean and "
-         "standard deviation of 2 : %f\n", x);
+  // float x = rng_.Gaussian(0.0, 2.0);
+  // printf("Random number drawn from Gaussian distribution with 0 mean and "
+  //        "standard deviation of 2 : %f\n", x);
 }
 
 void ParticleFilter::Initialize(const string& map_file,
@@ -177,12 +264,14 @@ void ParticleFilter::Initialize(const string& map_file,
   // some distribution around the provided location and angle.
   map_.Load(map_file);
 
+  particles_.clear();
+  double weight = 1.0 / num_initial_particles;
   for (int i = 0; i < num_initial_particles; i++) {
-    float x = rng_.Gaussian(loc(0), .5);
-    float y = rng_.Gaussian(loc(1), .5);
-    float theta = rng_.Gaussian(angle, M_PI / 4);
+    float x = rng_.Gaussian(loc(0), initial_std_x);
+    float y = rng_.Gaussian(loc(1), initial_std_y);
+    float theta = rng_.Gaussian(angle, initial_std_theta);
 
-    particles_.emplace_back(x, y, theta);
+    particles_.emplace_back(x, y, theta, weight);
   }
 }
 

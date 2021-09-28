@@ -39,9 +39,10 @@ struct Particle {
   double weight;
 
   public:
-    Particle(float x, float y, float theta) {
+    Particle(float x, float y, float theta, double init_weight) {
       loc = Eigen::Vector2f(x,y);
       angle = theta;
+      weight = init_weight;
     }
 };
 
@@ -83,6 +84,10 @@ class ParticleFilter {
   // Resample particles.
   void Resample();
 
+  Eigen::Vector2f LaserScanToPoint(float angle, float distance);
+  void NormalizeWeights();
+  int SearchBins(std::vector<float>& bins, float sample);
+
   // For debugging: get predicted point cloud from current location.
   void GetPredictedPointCloud(const Eigen::Vector2f& loc,
                               const float angle,
@@ -110,6 +115,24 @@ class ParticleFilter {
   bool odom_initialized_;
 
   const int num_initial_particles = 50;
+
+  const double initial_std_x = 0.25;
+  const double initial_std_y = 0.25;
+  const double initial_std_theta = M_PI / 12;
+
+  const double laser_x_offset = 0.2;
+
+  int num_scans_predicted;
+
+  // Standard deviation of the sensor
+  // Seems pretty small?
+  double update_variance = 0.01;
+
+  // Account for correlation between rays on update step
+  // 1    -> no correlation
+  // 1/n  -> perfect correlation (n = number of rays)
+  double gamma = 1 / 500;
+
 };
 }  // namespace slam
 
