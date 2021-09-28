@@ -137,7 +137,7 @@ class ParticleFilter {
 
 
   // Added by us
-  Vector2f& prev_odom_loc = nullptr;
+  Eigen::Vector2f prev_odom_loc = Eigen::Vector2f(-1000, -1000);
   float prev_odom_angle = 0;
 };
 }  // namespace slam

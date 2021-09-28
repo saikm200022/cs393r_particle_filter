@@ -253,9 +253,10 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // standard deviation 2:
   // printf("Random number drawn from Gaussian distribution with 0 mean and "
   //        "standard deviation of 2 : %f\n", x);
-  if (prev_odom_loc == nullptr) {
+  if (prev_odom_loc[0] == -1000) {
     // Todo do you need deep copy?
-    prev_odom_loc = odom_loc;
+    prev_odom_loc[0] = odom_loc[0];
+    prev_odom_loc[1] = odom_loc[1];
     prev_odom_angle = odom_angle;
   } else {
     for (unsigned int i = 0; i < particles_.size(); i++)
