@@ -133,7 +133,7 @@ class ParticleFilter {
   // 1/n  -> perfect correlation (n = number of rays)
   double gamma = 1 / 500;
 
-  const int k = 25;
+  const int k = 1;
 
 
   // Added by us
