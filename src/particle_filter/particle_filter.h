@@ -134,6 +134,11 @@ class ParticleFilter {
   double gamma = 1 / 500;
 
   const int k = 25;
+
+
+  // Added by us
+  Vector2f& prev_odom_loc = nullptr;
+  float prev_odom_angle = 0;
 };
 }  // namespace slam
 

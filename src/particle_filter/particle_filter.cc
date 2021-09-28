@@ -253,15 +253,27 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // standard deviation 2:
   // printf("Random number drawn from Gaussian distribution with 0 mean and "
   //        "standard deviation of 2 : %f\n", x);
-  for (unsigned int i = 0; i < particles_.size(); i++)
-  {
-    Particle particle = particles_[i];
-    float next_x = rng_.Gaussian(particle.loc[0] + odom_loc[0], k * odom_loc[0]);
-    float next_y = rng_.Gaussian(particle.loc[1] + odom_loc[1], k * odom_loc[0]);
-    float next_theta = rng_.Gaussian(particle.angle + odom_angle, k * abs(odom_angle));
-    particles_[i].loc[0] = next_x;
-    particles_[i].loc[1] = next_y;
-    particles_[i].angle = next_theta;
+  if (prev_odom_loc == nullptr) {
+    // Todo do you need deep copy?
+    prev_odom_loc = odom_loc;
+    prev_odom_angle = odom_angle;
+  } else {
+    for (unsigned int i = 0; i < particles_.size(); i++)
+    {
+      float delta_x = odom_loc[0] - prev_odom_loc[0];
+      float delta_y = odom_loc[1] - prev_odom_loc[1];
+
+      float trans_x = delta_x * cos(prev_odom_angle) - delta_y * sin(prev_odom_angle);
+      float trans_y = delta_x * sin(prev_odom_angle) + delta_y * cos(prev_odom_angle);
+
+      Particle particle = particles_[i];
+      float next_x = rng_.Gaussian(particle.loc[0] + trans_x, k * odom_loc[0]);
+      float next_y = rng_.Gaussian(particle.loc[1] + trans_y, k * odom_loc[0]);
+      float next_theta = rng_.Gaussian(particle.angle + odom_angle - prev_odom_angle, k * abs(odom_angle));
+      particles_[i].loc[0] = next_x;
+      particles_[i].loc[1] = next_y;
+      particles_[i].angle = next_theta;
+    }
   }
 }
 
