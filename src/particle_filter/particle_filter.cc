@@ -205,11 +205,13 @@ void ParticleFilter::Update(const vector<float>& ranges,
 void ParticleFilter::NormalizeWeights() {
   // This maybe needs to be readjusted bc log likelihood
   double weight_sum = 0;
-  double lowest = 0;
+  double lowest = 500000000;
   for (auto p : particles_) {
     if (p.weight < lowest)
       lowest = p.weight;
   }
+
+
 
   for (auto& p : particles_) {
     p.weight -= lowest;
@@ -287,9 +289,24 @@ void ParticleFilter::Resample() {
 
     int bin_index = SearchBins(bins, sample);
     if (bin_index == -1) {
-      assert(0);
+      bin_index = (int)(sample * (float)bins.size());
+      // printf("No bins\n");
+      // printf("Bins size: %lu\n", bins.size());
+      // for (unsigned j = 0; j < bins.size(); j++) {
+      //   printf("Bin %u: %f\n", j, bins[j]);
+      // }
+
+      // for (unsigned k = 0; k < particles_.size(); k++) {
+      //   printf("Particle %u: %lf\n", k, particles_[k].weight);
+      // }
+
+      // return;
     }
     new_particles.push_back(particles_[bin_index]);
+  }
+
+  for (Particle& p : new_particles) {
+    p.weight = 1.0 / (double)new_particles.size();
   }
 
   particles_ = new_particles;
