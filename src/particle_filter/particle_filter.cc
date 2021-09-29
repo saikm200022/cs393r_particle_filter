@@ -69,6 +69,32 @@ Eigen::Vector2f ParticleFilter::LaserScanToPoint(float angle, float distance) {
     return point;
 }
 
+// translate from robot frame to global frame
+Eigen::Vector2f ParticleFilter::RobotToGlobal (Eigen::Vector2f point, const Vector2f& loc, const float angle) {
+  Eigen::Matrix2f rot;
+  float ang = -angle;
+  rot(0,0) = cos(ang);
+  rot(0,1) = -sin(ang);
+  rot(1,0) = sin(ang);
+  rot(1,1) = cos(ang);
+
+  auto translated_point = (rot * point) + loc;
+  return translated_point;
+}
+
+// translate from robot frame to global frame
+Eigen::Vector2f ParticleFilter::GlobalToRobot (Eigen::Vector2f point, const Vector2f& loc, const float angle) {
+  Eigen::Matrix2f rot;
+  float ang = angle;
+  rot(0,0) = cos(ang);
+  rot(0,1) = -sin(ang);
+  rot(1,0) = sin(ang);
+  rot(1,1) = cos(ang);
+
+  auto translated_point = rot * (point - loc);
+  return translated_point;
+}
+
 void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
                                             const float angle,
                                             int num_ranges,
@@ -91,15 +117,19 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
   float theta = angle_min;
 
   // Create the laser scan points
-  for (size_t i = 0; i < scan.size(); ++i) {
+  for (int i = 0; i < num_ranges; ++i) {
     // Initialize with max range
-    Vector2f point = LaserScanToPoint(range_max, theta);
+    Vector2f robot_point = LaserScanToPoint(theta, range_max);
+    Vector2f global_point = RobotToGlobal(robot_point, loc, angle);
 
     // compare with lines on map
     // Optimize this with AABB if time permits
+    // printf("Length of map file: %lud\n", map_.lines.size());
     for (size_t i = 0; i < map_.lines.size(); ++i) {
       const line2f map_line = map_.lines[i];
-      line2f scan_line(0, 0, point.x(), point.y());
+      // printf("Map line: %f %f   %f %f\n", map_line.p0.x(), map_line.p0.y(), map_line.p1.x(), map_line.p1.y());
+      
+      line2f scan_line(loc.x(), loc.y(), global_point.x(), global_point.y());
 
       bool intersects = map_line.Intersects(scan_line);
 
@@ -107,14 +137,22 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
       intersects = map_line.Intersection(scan_line, &intersection_point);
 
       if (intersects) {
+        // printf("Intersection found\n");
+        line2f intersection_line(loc.x(), loc.y(), intersection_point.x(), intersection_point.y());
         // Find the closest intersection that is outside the min range
-        if (intersection_point.norm() < point.norm() && intersection_point.norm() > range_min) {
-          point = intersection_point;
+        if (intersection_line.Length() < scan_line.Length() && intersection_point.norm() > range_min) {
+          // printf("**************Intersection found\n");
+          global_point = intersection_point;
+          scan_line = line2f(loc.x(), loc.y(), global_point.x(), global_point.y());
         }
       }
     }
 
-    scan[i] = point;
+    // scan[i] = robot_point;
+    scan[i] = GlobalToRobot(global_point, loc, angle);
+    // printf("Robot point original norm: %lf\n", robot_point.norm());
+    // printf("Robot point final norm:    %lf\n", scan[i].norm());
+
     theta += angle_delta;
   }
 }
@@ -137,7 +175,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
   vector<Vector2f> predicted_scan;
   GetPredictedPointCloud(p.loc, p.angle, num_scans_predicted, range_min, range_max, angle_min, angle_max, &predicted_scan);
   
-  // double likelihood = 1.0;
+  double likelihood = 1.0;
 
   double log_likelihood = 0;
 
@@ -153,13 +191,16 @@ void ParticleFilter::Update(const vector<float>& ranges,
 
     // Slide deck 7: 31-32
     // Original:
-    // double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
-    // likelihood *= term;
+    double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
+    likelihood *= term;
     angle += angle_delta;
   }
 
   p_ptr->weight = gamma * log_likelihood;
+  // p_ptr->weight = likelihood;
 
+  // printf("Likelihood for particle: %lf\n", likelihood);
+  // printf("Log Likelihood for particle: %lf\n", gamma * log_likelihood);
 }
 
 void ParticleFilter::NormalizeWeights() {
@@ -169,8 +210,11 @@ void ParticleFilter::NormalizeWeights() {
     weight_sum += p.weight;
   }
 
-  for (auto p : particles_) {
+  for (auto& p : particles_) {
+    // printf("Old weight: %lf\n", p.weight);
+
     p.weight = p.weight / weight_sum;
+    // printf("New weight: %lf\n\n", p.weight);
   }
 }
 
@@ -203,11 +247,15 @@ void ParticleFilter::Resample() {
   // The current particles are in the `particles_` variable. 
   // Create a variable to store the new particles, and when done, replace the
   // old set of particles:
+  if (particles_.size() < 1)
+    return;
+
   NormalizeWeights();
+  // printf("Resampling\n");
   vector<Particle> new_particles;
 
   vector<float> bins;
-  float running_sum = 0;
+  double running_sum = 0;
   for (unsigned i = 0; i < particles_.size(); i++) {
     running_sum += particles_[i].weight;
     bins.push_back(running_sum);
@@ -215,8 +263,10 @@ void ParticleFilter::Resample() {
 
   for (unsigned i = 0; i < particles_.size(); i++) {
     float sample = rng_.UniformRandom(0, 1);
-    int index = SearchBins(bins, sample);
-    new_particles.push_back(particles_[index]);
+    // printf("Sample: %f\n", sample);
+
+    int bin_index = SearchBins(bins, sample);
+    new_particles.push_back(particles_[bin_index]);
   }
 
   particles_ = new_particles;
@@ -231,9 +281,9 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   // Call the Update and Resample steps as necessary.
 
   num_scans_predicted = ranges.size();
-
-  // Update the weights of the particles
-  for (auto p_ptr : particles_) {
+// 
+  // // Update the weights of the particles
+  for (auto& p_ptr : particles_) {
     Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
   }
 
@@ -253,16 +303,16 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // standard deviation 2:
   // printf("Random number drawn from Gaussian distribution with 0 mean and "
   //        "standard deviation of 2 : %f\n", x);
-  for (unsigned int i = 0; i < particles_.size(); i++)
-  {
-    Particle particle = particles_[i];
-    float next_x = rng_.Gaussian(particle.loc[0] + odom_loc[0], k * odom_loc[0]);
-    float next_y = rng_.Gaussian(particle.loc[1] + odom_loc[1], k * odom_loc[0]);
-    float next_theta = rng_.Gaussian(particle.angle + odom_angle, k * abs(odom_angle));
-    particles_[i].loc[0] = next_x;
-    particles_[i].loc[1] = next_y;
-    particles_[i].angle = next_theta;
-  }
+  // for (unsigned int i = 0; i < particles_.size(); i++)
+  // {
+  //   Particle particle = particles_[i];
+  //   float next_x = rng_.Gaussian(particle.loc[0] + odom_loc[0], k * odom_loc[0]);
+  //   float next_y = rng_.Gaussian(particle.loc[1] + odom_loc[1], k * odom_loc[0]);
+  //   float next_theta = rng_.Gaussian(particle.angle + odom_angle, k * abs(odom_angle));
+  //   particles_[i].loc[0] = next_x;
+  //   particles_[i].loc[1] = next_y;
+  //   particles_[i].angle = next_theta;
+  // }
 }
 
 void ParticleFilter::Initialize(const string& map_file,
@@ -272,8 +322,8 @@ void ParticleFilter::Initialize(const string& map_file,
   // was received from the log. Initialize the particles accordingly, e.g. with
   // some distribution around the provided location and angle.
   map_.Load(map_file);
-
-  particles_.clear();
+  printf("Initializing...\n");
+  // particles_.clear();
   double weight = 1.0 / num_initial_particles;
   for (int i = 0; i < num_initial_particles; i++) {
     float x = rng_.Gaussian(loc(0), initial_std_x);
@@ -288,11 +338,17 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
                                  float* angle_ptr) const {
   Vector2f& loc = *loc_ptr;
   float& angle = *angle_ptr;
-  // Compute the best estimate of the robot's location based on the current set
-  // of particles. The computed values must be set to the `loc` and `angle`
-  // variables to return them. Modify the following assignments:
-  loc = Vector2f(0, 0);
-  angle = 0;
+  // // Compute the best estimate of the robot's location based on the current set
+  // // of particles. The computed values must be set to the `loc` and `angle`
+  // // variables to return them. Modify the following assignments:
+  if (particles_.size() > 0) {
+    Particle p = particles_[0];
+    loc = p.loc;
+    angle = p.angle;
+  } else {
+    loc = Vector2f(0, 0);
+    angle = 0;
+  }
 }
 
 

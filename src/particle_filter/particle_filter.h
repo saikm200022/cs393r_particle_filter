@@ -87,6 +87,9 @@ class ParticleFilter {
   Eigen::Vector2f LaserScanToPoint(float angle, float distance);
   void NormalizeWeights();
   int SearchBins(std::vector<float>& bins, float sample);
+  Eigen::Vector2f RobotToGlobal (Eigen::Vector2f point, const Eigen::Vector2f& loc, const float angle);
+  Eigen::Vector2f GlobalToRobot (Eigen::Vector2f point, const Eigen::Vector2f& loc, const float angle);
+
 
   // For debugging: get predicted point cloud from current location.
   void GetPredictedPointCloud(const Eigen::Vector2f& loc,
@@ -98,13 +101,14 @@ class ParticleFilter {
                               float angle_max,
                               std::vector<Eigen::Vector2f>* scan);
 
+  vector_map::VectorMap map_;
+
  private:
 
   // List of particles being tracked.
   std::vector<Particle> particles_;
 
   // Map of the environment.
-  vector_map::VectorMap map_;
 
   // Random number generator.
   util_random::Random rng_;
@@ -131,7 +135,9 @@ class ParticleFilter {
   // Account for correlation between rays on update step
   // 1    -> no correlation
   // 1/n  -> perfect correlation (n = number of rays)
-  double gamma = 1 / 500;
+  double gamma = 1.0 / 500.0;
+
+  int visualize_particle_filter = 1;
 
   const int k = 25;
 };

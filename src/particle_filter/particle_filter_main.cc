@@ -108,7 +108,7 @@ void PublishParticles() {
 }
 
 void PublishPredictedScan() {
-  const uint32_t kColor = 0xd67d00;
+  const uint32_t kColor = 0xA269E5;
   Vector2f robot_loc(0, 0);
   float robot_angle(0);
   particle_filter_.GetLocation(&robot_loc, &robot_angle);
@@ -125,6 +125,20 @@ void PublishPredictedScan() {
   for (const Vector2f& p : predicted_scan) {
     DrawPoint(p, kColor, vis_msg_);
   }
+}
+
+void PublishMap() {
+  auto map = particle_filter_.map_;
+  const uint32_t kColor = 0xFF73D4;
+
+  for (size_t i = 0; i < map.lines.size(); ++i) {
+      const line2f map_line = map.lines[i];
+      DrawLine(map_line.p0,
+             map_line.p1,
+             kColor,
+             vis_msg_);
+  }
+
 }
 
 void PublishTrajectory() {
@@ -163,6 +177,7 @@ void PublishVisualization() {
   PublishParticles();
   PublishPredictedScan();
   PublishTrajectory();
+  PublishMap();
   visualization_publisher_.publish(vis_msg_);
 }
 
