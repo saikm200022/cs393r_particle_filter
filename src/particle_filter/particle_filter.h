@@ -148,6 +148,8 @@ class ParticleFilter {
 
   float distance_travelled = .15;
   float angle_travelled = .175;
+
+  int num_updates = 10;
 };
 }  // namespace slam
 

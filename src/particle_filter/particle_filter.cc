@@ -325,6 +325,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     // // Update the weights of the particles
     for (auto& p_ptr : particles_) {
       Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
+      num_updates -= 1;
     }
 
     distance_travelled = .15;
@@ -332,7 +333,11 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   
   }
 
-  Resample();
+  if (num_updates <= 0)
+  {
+    Resample();
+    num_updates = 5;
+  }
 
 }
 
