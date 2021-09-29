@@ -338,40 +338,41 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // forward based on odometry.
 
 
-  // You will need to use the Gaussian random number generator provided. For
-  // example, to generate a random number from a Gaussian with mean 0, and
-  // standard deviation 2:
-  // printf("Random number drawn from Gaussian distribution with 0 mean and "
-  //        "standard deviation of 2 : %f\n", x);
+  // For first time step when odometry is not known:
   if (prev_odom_loc[0] == (float)-1000) {
     // Todo do you need deep copy?
     prev_odom_loc[0] = odom_loc[0];
     prev_odom_loc[1] = odom_loc[1];
     prev_odom_angle = odom_angle;
-  } else {
+  } 
+
+  else 
+  {
     for (unsigned int i = 0; i < particles_.size(); i++)
     {
       Particle particle = particles_[i];
 
-      // Slide 6:26-27
+      // T_2^Odom - T_1^Odom
       Vector2f delta_odom = odom_loc - prev_odom_loc;
+      // R(-Theta_1^Odom)
       Eigen::Matrix2f rot = GetRotationMatrix(-prev_odom_angle);
-
+      // R(theta_1^Map) * delta T_base_link
       Vector2f delta_T_bl = rot * delta_odom;
+      // T_2^Map = T_1^Map + ...
       Vector2f T_map = particle.loc + GetRotationMatrix(particle.angle) * delta_T_bl;
 
       float delta_theta_bl = odom_angle - prev_odom_angle;
       float theta_map = particle.angle + delta_theta_bl;
       
+      // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
       float next_x = rng_.Gaussian(T_map[0], k );
       float next_y = rng_.Gaussian(T_map[1], k );
       float next_theta = rng_.Gaussian(theta_map, k);
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
-      // printf("X: %f, Y: %f \n", next_x,next_y);
       particles_[i].angle = next_theta;
-      // particles_[i].weight = 1;
     }
+    // Keep track of previous odometry
     prev_odom_loc[0] = odom_loc[0];
     prev_odom_loc[1] = odom_loc[1];
     prev_odom_angle = odom_angle;
