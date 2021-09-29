@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++11 -Wall -Werror -fopenmp -O2 -DNDEBUG -O2 -g -DNDEBUG -fPIC
 
 CXX_DEFINES = -DGTEST_CREATE_SHARED_LIBRARY=1 -DROS_PACKAGE_NAME=\"cs393r_starter\" -Dgtest_EXPORTS
 
-CXX_INCLUDES = -I/u/jdeans47/AutonomousRobots/cs393r_starter/include -I/usr/src/googletest/googletest/include -I/usr/src/googletest/googletest 
+CXX_INCLUDES = -I/u/amargol/Masters/Robots/projects/cs393r_starter/include -I/usr/src/googletest/googletest/include -I/usr/src/googletest/googletest 
 

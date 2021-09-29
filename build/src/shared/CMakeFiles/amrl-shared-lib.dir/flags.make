@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++11 -Wall -Werror -fopenmp -O2 -DNDEBUG -std=c++11 -O2 -g -DN
 
 CXX_DEFINES = -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"cs393r_starter\" -Damrl_shared_lib_EXPORTS
 
-CXX_INCLUDES = -I/u/jdeans47/AutonomousRobots/cs393r_starter/build/src/shared -I/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared -I/u/jdeans47/AutonomousRobots/cs393r_starter/include -I/u/jdeans47/AutonomousRobots/ut_automata/msg_gen/cpp/include -I/u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include -I/u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/srv_gen/cpp/include -I/opt/ros/melodic/include 
+CXX_INCLUDES = -I/u/amargol/Masters/Robots/projects/cs393r_starter/build/src/shared -I/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared -I/u/amargol/Masters/Robots/projects/cs393r_starter/include -I/u/amargol/Masters/Robots/ut_automata/msg_gen/cpp/include -I/u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include -I/u/amargol/Masters/Robots/amrl_msgs/srv_gen/cpp/include -I/opt/ros/melodic/include 
 

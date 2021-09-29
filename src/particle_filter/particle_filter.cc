@@ -342,7 +342,7 @@ void ParticleFilter::Initialize(const string& map_file,
   // some distribution around the provided location and angle.
   map_.Load(map_file);
   printf("Initializing...\n");
-  // particles_.clear();
+  particles_.clear();
   double weight = 1.0 / num_initial_particles;
   for (int i = 0; i < num_initial_particles; i++) {
     float x = rng_.Gaussian(loc(0), initial_std_x);

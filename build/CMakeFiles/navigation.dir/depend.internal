@@ -71,16 +71,16 @@ CMakeFiles/navigation.dir/src/navigation/navigation.cc.o
  /opt/ros/melodic/include/visualization_msgs/Marker.h
  /opt/ros/melodic/include/xmlrpcpp/XmlRpcDecl.h
  /opt/ros/melodic/include/xmlrpcpp/XmlRpcValue.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/AckermannCurvatureDriveMsg.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/ColoredArc2D.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/ColoredLine2D.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/ColoredPoint2D.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/PathVisualization.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/Point2D.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/Pose2Df.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/VisualizationMsg.h
- /u/jdeans47/AutonomousRobots/cs393r_starter/src/navigation/navigation.cc
- /u/jdeans47/AutonomousRobots/cs393r_starter/src/navigation/navigation.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/AckermannCurvatureDriveMsg.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/ColoredArc2D.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/ColoredLine2D.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/ColoredPoint2D.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/PathVisualization.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/Point2D.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/Pose2Df.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/VisualizationMsg.h
+ /u/amargol/Masters/Robots/projects/cs393r_starter/src/navigation/navigation.cc
+ /u/amargol/Masters/Robots/projects/cs393r_starter/src/navigation/navigation.h
 CMakeFiles/navigation.dir/src/navigation/navigation_main.cc.o
  ../src/shared/math/math_util.h
  ../src/shared/ros/ros_helpers.h
@@ -160,7 +160,7 @@ CMakeFiles/navigation.dir/src/navigation/navigation_main.cc.o
  /opt/ros/melodic/include/visualization_msgs/MarkerArray.h
  /opt/ros/melodic/include/xmlrpcpp/XmlRpcDecl.h
  /opt/ros/melodic/include/xmlrpcpp/XmlRpcValue.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/Localization2DMsg.h
- /u/jdeans47/AutonomousRobots/amrl_libraries/amrl_msgs/msg_gen/cpp/include/amrl_msgs/Pose2Df.h
- /u/jdeans47/AutonomousRobots/cs393r_starter/src/navigation/navigation.h
- /u/jdeans47/AutonomousRobots/cs393r_starter/src/navigation/navigation_main.cc
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/Localization2DMsg.h
+ /u/amargol/Masters/Robots/amrl_msgs/msg_gen/cpp/include/amrl_msgs/Pose2Df.h
+ /u/amargol/Masters/Robots/projects/cs393r_starter/src/navigation/navigation.h
+ /u/amargol/Masters/Robots/projects/cs393r_starter/src/navigation/navigation_main.cc

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /u/jdeans47/AutonomousRobots/cs393r_starter
+CMAKE_SOURCE_DIR = /u/amargol/Masters/Robots/projects/cs393r_starter
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /u/jdeans47/AutonomousRobots/cs393r_starter/build
+CMAKE_BINARY_DIR = /u/amargol/Masters/Robots/projects/cs393r_starter/build
 
 # Utility rule file for test.
 
@@ -67,6 +67,6 @@ CMakeFiles/test.dir/clean:
 .PHONY : CMakeFiles/test.dir/clean
 
 CMakeFiles/test.dir/depend:
-	cd /u/jdeans47/AutonomousRobots/cs393r_starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/jdeans47/AutonomousRobots/cs393r_starter /u/jdeans47/AutonomousRobots/cs393r_starter /u/jdeans47/AutonomousRobots/cs393r_starter/build /u/jdeans47/AutonomousRobots/cs393r_starter/build /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/test.dir/DependInfo.cmake --color=$(COLOR)
+	cd /u/amargol/Masters/Robots/projects/cs393r_starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/amargol/Masters/Robots/projects/cs393r_starter /u/amargol/Masters/Robots/projects/cs393r_starter /u/amargol/Masters/Robots/projects/cs393r_starter/build /u/amargol/Masters/Robots/projects/cs393r_starter/build /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/test.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/test.dir/depend
 

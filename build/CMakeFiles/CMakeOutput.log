@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/3.10.2/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/3.10.2/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/g++ 
@@ -23,36 +23,36 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/3.10.2/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/3.10.2/CompilerIdCXX/a.out"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_7fe44/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_7fe44.dir/build.make CMakeFiles/cmTC_7fe44.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_7fe44.dir/testCCompiler.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTC_7fe44.dir/testCCompiler.c.o   -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_7fe44
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7fe44.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_7fe44.dir/testCCompiler.c.o  -o cmTC_7fe44 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_8bb0e/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_8bb0e.dir/build.make CMakeFiles/cmTC_8bb0e.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_8bb0e.dir/testCCompiler.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_8bb0e.dir/testCCompiler.c.o   -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_8bb0e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8bb0e.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_8bb0e.dir/testCCompiler.c.o  -o cmTC_8bb0e 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_92da5/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_92da5.dir/build.make CMakeFiles/cmTC_92da5.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_92da5
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92da5.dir/link.txt --verbose=1
-/usr/bin/gcc     -v -rdynamic CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o  -o cmTC_92da5 
+Run Build Command:"/usr/bin/make" "cmTC_38e62/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_38e62.dir/build.make CMakeFiles/cmTC_38e62.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_38e62
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_38e62.dir/link.txt --verbose=1
+/usr/bin/gcc     -v -rdynamic CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o  -o cmTC_38e62 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/gcc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
@@ -64,26 +64,26 @@ Thread model: posix
 gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_92da5' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccBGIctN.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_92da5 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_92da5' '-mtune=generic' '-march=x86-64'
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_38e62' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccxsNX31.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_38e62 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_38e62' '-mtune=generic' '-march=x86-64'
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_92da5/fast"]
-  ignore line: [make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp']
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_92da5.dir/build.make CMakeFiles/cmTC_92da5.dir/build]
-  ignore line: [make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/gcc    -o CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_92da5]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92da5.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/gcc     -v -rdynamic CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o  -o cmTC_92da5 ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_38e62/fast"]
+  ignore line: [make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_38e62.dir/build.make CMakeFiles/cmTC_38e62.dir/build]
+  ignore line: [make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/gcc    -o CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_38e62]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_38e62.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/gcc     -v -rdynamic CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o  -o cmTC_38e62 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/gcc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
@@ -95,13 +95,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_92da5' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccBGIctN.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_92da5 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_38e62' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccxsNX31.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_38e62 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccBGIctN.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccxsNX31.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -120,7 +120,7 @@ Parsed C implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_92da5] ==> ignore
+    arg [cmTC_38e62] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -132,7 +132,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_92da5.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_38e62.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -162,19 +162,19 @@ Parsed C implicit link information from above output:
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_637a3/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_637a3.dir/build.make CMakeFiles/cmTC_637a3.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_637a3.dir/feature_tests.c.o
-/usr/bin/gcc   -std=c11 -o CMakeFiles/cmTC_637a3.dir/feature_tests.c.o   -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_637a3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_637a3.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_637a3.dir/feature_tests.c.o  -o cmTC_637a3 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_4f560/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_4f560.dir/build.make CMakeFiles/cmTC_4f560.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_4f560.dir/feature_tests.c.o
+/usr/bin/gcc   -std=c11 -o CMakeFiles/cmTC_4f560.dir/feature_tests.c.o   -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_4f560
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4f560.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_4f560.dir/feature_tests.c.o  -o cmTC_4f560 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -184,19 +184,19 @@ make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CM
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_51ccf/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_51ccf.dir/build.make CMakeFiles/cmTC_51ccf.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_51ccf.dir/feature_tests.c.o
-/usr/bin/gcc   -std=c99 -o CMakeFiles/cmTC_51ccf.dir/feature_tests.c.o   -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_51ccf
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51ccf.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_51ccf.dir/feature_tests.c.o  -o cmTC_51ccf 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_9ad9f/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_9ad9f.dir/build.make CMakeFiles/cmTC_9ad9f.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9ad9f.dir/feature_tests.c.o
+/usr/bin/gcc   -std=c99 -o CMakeFiles/cmTC_9ad9f.dir/feature_tests.c.o   -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_9ad9f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9ad9f.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_9ad9f.dir/feature_tests.c.o  -o cmTC_9ad9f 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -206,19 +206,19 @@ make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CM
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_05ff9/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_05ff9.dir/build.make CMakeFiles/cmTC_05ff9.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_05ff9.dir/feature_tests.c.o
-/usr/bin/gcc   -std=c90 -o CMakeFiles/cmTC_05ff9.dir/feature_tests.c.o   -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_05ff9
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_05ff9.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_05ff9.dir/feature_tests.c.o  -o cmTC_05ff9 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_628fc/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_628fc.dir/build.make CMakeFiles/cmTC_628fc.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_628fc.dir/feature_tests.c.o
+/usr/bin/gcc   -std=c90 -o CMakeFiles/cmTC_628fc.dir/feature_tests.c.o   -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_628fc
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_628fc.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_628fc.dir/feature_tests.c.o  -o cmTC_628fc 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -226,33 +226,33 @@ make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CM
     Feature record: C_FEATURE:0c_static_assert
     Feature record: C_FEATURE:0c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_3b7b2/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_3b7b2.dir/build.make CMakeFiles/cmTC_3b7b2.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_3b7b2.dir/testCXXCompiler.cxx.o
-/usr/bin/g++     -o CMakeFiles/cmTC_3b7b2.dir/testCXXCompiler.cxx.o -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_3b7b2
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3b7b2.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_3b7b2.dir/testCXXCompiler.cxx.o  -o cmTC_3b7b2 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_9e335/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_9e335.dir/build.make CMakeFiles/cmTC_9e335.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9e335.dir/testCXXCompiler.cxx.o
+/usr/bin/g++     -o CMakeFiles/cmTC_9e335.dir/testCXXCompiler.cxx.o -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_9e335
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9e335.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_9e335.dir/testCXXCompiler.cxx.o  -o cmTC_9e335 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_017c4/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_017c4.dir/build.make CMakeFiles/cmTC_017c4.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/g++     -o CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_017c4
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_017c4.dir/link.txt --verbose=1
-/usr/bin/g++      -v -rdynamic CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_017c4 
+Run Build Command:"/usr/bin/make" "cmTC_1a6e4/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_1a6e4.dir/build.make CMakeFiles/cmTC_1a6e4.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/g++     -o CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_1a6e4
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a6e4.dir/link.txt --verbose=1
+/usr/bin/g++      -v -rdynamic CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_1a6e4 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/g++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
@@ -264,26 +264,26 @@ Thread model: posix
 gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_017c4' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccni65hZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_017c4 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_017c4' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_1a6e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cclNYd9U.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_1a6e4 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_1a6e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_017c4/fast"]
-  ignore line: [make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp']
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_017c4.dir/build.make CMakeFiles/cmTC_017c4.dir/build]
-  ignore line: [make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/g++     -o CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_017c4]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_017c4.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/g++      -v -rdynamic CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_017c4 ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_1a6e4/fast"]
+  ignore line: [make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_1a6e4.dir/build.make CMakeFiles/cmTC_1a6e4.dir/build]
+  ignore line: [make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/g++     -o CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_1a6e4]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a6e4.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/g++      -v -rdynamic CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_1a6e4 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/g++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
@@ -295,13 +295,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_017c4' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccni65hZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_017c4 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_1a6e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cclNYd9U.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_1a6e4 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccni65hZ.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cclNYd9U.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -320,7 +320,7 @@ Parsed CXX implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_017c4] ==> ignore
+    arg [cmTC_1a6e4] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -332,7 +332,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_017c4.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_1a6e4.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -358,19 +358,19 @@ Parsed CXX implicit link information from above output:
 
 
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_62e50/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_62e50.dir/build.make CMakeFiles/cmTC_62e50.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_62e50.dir/feature_tests.cxx.o
-/usr/bin/g++    -std=c++1z -o CMakeFiles/cmTC_62e50.dir/feature_tests.cxx.o -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_62e50
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62e50.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_62e50.dir/feature_tests.cxx.o  -o cmTC_62e50 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_3a54b/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_3a54b.dir/build.make CMakeFiles/cmTC_3a54b.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_3a54b.dir/feature_tests.cxx.o
+/usr/bin/g++    -std=c++1z -o CMakeFiles/cmTC_3a54b.dir/feature_tests.cxx.o -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_3a54b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3a54b.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_3a54b.dir/feature_tests.cxx.o  -o cmTC_3a54b 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -433,19 +433,19 @@ make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CM
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_6e09e/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_6e09e.dir/build.make CMakeFiles/cmTC_6e09e.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_6e09e.dir/feature_tests.cxx.o
-/usr/bin/g++    -std=c++14 -o CMakeFiles/cmTC_6e09e.dir/feature_tests.cxx.o -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_6e09e
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6e09e.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_6e09e.dir/feature_tests.cxx.o  -o cmTC_6e09e 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_25076/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_25076.dir/build.make CMakeFiles/cmTC_25076.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_25076.dir/feature_tests.cxx.o
+/usr/bin/g++    -std=c++14 -o CMakeFiles/cmTC_25076.dir/feature_tests.cxx.o -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_25076
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_25076.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_25076.dir/feature_tests.cxx.o  -o cmTC_25076 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -508,19 +508,19 @@ make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CM
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_6cd86/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_6cd86.dir/build.make CMakeFiles/cmTC_6cd86.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_6cd86.dir/feature_tests.cxx.o
-/usr/bin/g++    -std=c++11 -o CMakeFiles/cmTC_6cd86.dir/feature_tests.cxx.o -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_6cd86
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6cd86.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_6cd86.dir/feature_tests.cxx.o  -o cmTC_6cd86 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_46bc0/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_46bc0.dir/build.make CMakeFiles/cmTC_46bc0.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_46bc0.dir/feature_tests.cxx.o
+/usr/bin/g++    -std=c++11 -o CMakeFiles/cmTC_46bc0.dir/feature_tests.cxx.o -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_46bc0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_46bc0.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_46bc0.dir/feature_tests.cxx.o  -o cmTC_46bc0 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -583,19 +583,19 @@ make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CM
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_7b763/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_7b763.dir/build.make CMakeFiles/cmTC_7b763.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_7b763.dir/feature_tests.cxx.o
-/usr/bin/g++    -std=c++98 -o CMakeFiles/cmTC_7b763.dir/feature_tests.cxx.o -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_7b763
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7b763.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_7b763.dir/feature_tests.cxx.o  -o cmTC_7b763 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_12894/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_12894.dir/build.make CMakeFiles/cmTC_12894.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_12894.dir/feature_tests.cxx.o
+/usr/bin/g++    -std=c++98 -o CMakeFiles/cmTC_12894.dir/feature_tests.cxx.o -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_12894
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_12894.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_12894.dir/feature_tests.cxx.o  -o cmTC_12894 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -656,34 +656,34 @@ make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CM
     Feature record: CXX_FEATURE:0cxx_variadic_macros
     Feature record: CXX_FEATURE:0cxx_variadic_templates
 Determining if the include file pthread.h exists passed with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_6f68a/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_6f68a.dir/build.make CMakeFiles/cmTC_6f68a.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_6f68a.dir/CheckIncludeFile.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTC_6f68a.dir/CheckIncludeFile.c.o   -c /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTC_6f68a
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6f68a.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_6f68a.dir/CheckIncludeFile.c.o  -o cmTC_6f68a 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_40046/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_40046.dir/build.make CMakeFiles/cmTC_40046.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_40046.dir/CheckIncludeFile.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_40046.dir/CheckIncludeFile.c.o   -c /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_40046
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_40046.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_40046.dir/CheckIncludeFile.c.o  -o cmTC_40046 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the function pthread_create exists in the pthread passed with the following output:
-Change Dir: /u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp
+Change Dir: /u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_9b6d3/fast"
-make[1]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-/usr/bin/make -f CMakeFiles/cmTC_9b6d3.dir/build.make CMakeFiles/cmTC_9b6d3.dir/build
-make[2]: Entering directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_9b6d3.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_9b6d3.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
-Linking C executable cmTC_9b6d3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9b6d3.dir/link.txt --verbose=1
-/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_9b6d3.dir/CheckFunctionExists.c.o  -o cmTC_9b6d3 -lpthread 
-make[2]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_b86c6/fast"
+make[1]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_b86c6.dir/build.make CMakeFiles/cmTC_b86c6.dir/build
+make[2]: Entering directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b86c6.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_b86c6.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_b86c6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b86c6.dir/link.txt --verbose=1
+/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_b86c6.dir/CheckFunctionExists.c.o  -o cmTC_b86c6 -lpthread 
+make[2]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles/CMakeTmp'
 
 

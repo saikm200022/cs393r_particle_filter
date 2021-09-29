@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /u/jdeans47/AutonomousRobots/cs393r_starter
+CMAKE_SOURCE_DIR = /u/amargol/Masters/Robots/projects/cs393r_starter
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /u/jdeans47/AutonomousRobots/cs393r_starter/build
+CMAKE_BINARY_DIR = /u/amargol/Masters/Robots/projects/cs393r_starter/build
 
 # Include any dependencies generated for this target.
 include gtest/googlemock/gtest/CMakeFiles/gtest.dir/depend.make
@@ -59,16 +59,16 @@ include gtest/googlemock/gtest/CMakeFiles/gtest.dir/flags.make
 
 gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o: gtest/googlemock/gtest/CMakeFiles/gtest.dir/flags.make
 gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o: /usr/src/googletest/googletest/src/gtest-all.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
-	cd /u/jdeans47/AutonomousRobots/cs393r_starter/build/gtest/googlemock/gtest && /usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /usr/src/googletest/googletest/src/gtest-all.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+	cd /u/amargol/Masters/Robots/projects/cs393r_starter/build/gtest/googlemock/gtest && /usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /usr/src/googletest/googletest/src/gtest-all.cc
 
 gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gtest.dir/src/gtest-all.cc.i"
-	cd /u/jdeans47/AutonomousRobots/cs393r_starter/build/gtest/googlemock/gtest && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /usr/src/googletest/googletest/src/gtest-all.cc > CMakeFiles/gtest.dir/src/gtest-all.cc.i
+	cd /u/amargol/Masters/Robots/projects/cs393r_starter/build/gtest/googlemock/gtest && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /usr/src/googletest/googletest/src/gtest-all.cc > CMakeFiles/gtest.dir/src/gtest-all.cc.i
 
 gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gtest.dir/src/gtest-all.cc.s"
-	cd /u/jdeans47/AutonomousRobots/cs393r_starter/build/gtest/googlemock/gtest && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /usr/src/googletest/googletest/src/gtest-all.cc -o CMakeFiles/gtest.dir/src/gtest-all.cc.s
+	cd /u/amargol/Masters/Robots/projects/cs393r_starter/build/gtest/googlemock/gtest && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /usr/src/googletest/googletest/src/gtest-all.cc -o CMakeFiles/gtest.dir/src/gtest-all.cc.s
 
 gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o.requires:
 
@@ -88,14 +88,14 @@ gtest_OBJECTS = \
 # External object files for target gtest
 gtest_EXTERNAL_OBJECTS =
 
-/u/jdeans47/AutonomousRobots/cs393r_starter/lib/libgtest.so: gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
-/u/jdeans47/AutonomousRobots/cs393r_starter/lib/libgtest.so: gtest/googlemock/gtest/CMakeFiles/gtest.dir/build.make
-/u/jdeans47/AutonomousRobots/cs393r_starter/lib/libgtest.so: gtest/googlemock/gtest/CMakeFiles/gtest.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/jdeans47/AutonomousRobots/cs393r_starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library /u/jdeans47/AutonomousRobots/cs393r_starter/lib/libgtest.so"
-	cd /u/jdeans47/AutonomousRobots/cs393r_starter/build/gtest/googlemock/gtest && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gtest.dir/link.txt --verbose=$(VERBOSE)
+/u/amargol/Masters/Robots/projects/cs393r_starter/lib/libgtest.so: gtest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
+/u/amargol/Masters/Robots/projects/cs393r_starter/lib/libgtest.so: gtest/googlemock/gtest/CMakeFiles/gtest.dir/build.make
+/u/amargol/Masters/Robots/projects/cs393r_starter/lib/libgtest.so: gtest/googlemock/gtest/CMakeFiles/gtest.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/amargol/Masters/Robots/projects/cs393r_starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library /u/amargol/Masters/Robots/projects/cs393r_starter/lib/libgtest.so"
+	cd /u/amargol/Masters/Robots/projects/cs393r_starter/build/gtest/googlemock/gtest && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gtest.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-gtest/googlemock/gtest/CMakeFiles/gtest.dir/build: /u/jdeans47/AutonomousRobots/cs393r_starter/lib/libgtest.so
+gtest/googlemock/gtest/CMakeFiles/gtest.dir/build: /u/amargol/Masters/Robots/projects/cs393r_starter/lib/libgtest.so
 
 .PHONY : gtest/googlemock/gtest/CMakeFiles/gtest.dir/build
 
@@ -104,10 +104,10 @@ gtest/googlemock/gtest/CMakeFiles/gtest.dir/requires: gtest/googlemock/gtest/CMa
 .PHONY : gtest/googlemock/gtest/CMakeFiles/gtest.dir/requires
 
 gtest/googlemock/gtest/CMakeFiles/gtest.dir/clean:
-	cd /u/jdeans47/AutonomousRobots/cs393r_starter/build/gtest/googlemock/gtest && $(CMAKE_COMMAND) -P CMakeFiles/gtest.dir/cmake_clean.cmake
+	cd /u/amargol/Masters/Robots/projects/cs393r_starter/build/gtest/googlemock/gtest && $(CMAKE_COMMAND) -P CMakeFiles/gtest.dir/cmake_clean.cmake
 .PHONY : gtest/googlemock/gtest/CMakeFiles/gtest.dir/clean
 
 gtest/googlemock/gtest/CMakeFiles/gtest.dir/depend:
-	cd /u/jdeans47/AutonomousRobots/cs393r_starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/jdeans47/AutonomousRobots/cs393r_starter /usr/src/googletest/googletest /u/jdeans47/AutonomousRobots/cs393r_starter/build /u/jdeans47/AutonomousRobots/cs393r_starter/build/gtest/googlemock/gtest /u/jdeans47/AutonomousRobots/cs393r_starter/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir/DependInfo.cmake --color=$(COLOR)
+	cd /u/amargol/Masters/Robots/projects/cs393r_starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/amargol/Masters/Robots/projects/cs393r_starter /usr/src/googletest/googletest /u/amargol/Masters/Robots/projects/cs393r_starter/build /u/amargol/Masters/Robots/projects/cs393r_starter/build/gtest/googlemock/gtest /u/amargol/Masters/Robots/projects/cs393r_starter/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : gtest/googlemock/gtest/CMakeFiles/gtest.dir/depend
 

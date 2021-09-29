@@ -1,4 +1,4 @@
-# Install script for directory: /u/jdeans47/AutonomousRobots/cs393r_starter/src/shared
+# Install script for directory: /u/amargol/Masters/Robots/projects/cs393r_starter/src/shared
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

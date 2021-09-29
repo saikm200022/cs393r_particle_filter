@@ -32,9 +32,9 @@ stdint.h
 string
 -
 
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/helpers.cc
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/helpers.cc
 util/helpers.h
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/util/helpers.h
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/util/helpers.h
 execinfo.h
 -
 stdio.h
@@ -58,39 +58,39 @@ utility
 vector
 -
 
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/pthread_utils.cc
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/pthread_utils.cc
 pthread.h
 -
 stdio.h
 -
 util/pthread_utils.h
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/util/pthread_utils.h
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/util/pthread_utils.h
 
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/random.cc
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/random.cc
 random.h
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/random.h
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/random.h
 random
 -
 
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/random.h
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/random.h
 random
 -
 
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/terminal_colors.cc
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/terminal_colors.cc
 stdio.h
 -
 vector
 -
 terminal_colors.h
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/terminal_colors.h
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/terminal_colors.h
 
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/terminal_colors.h
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/terminal_colors.h
 vector
 -
 
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/timer.cc
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/timer.cc
 util/timer.h
-/u/jdeans47/AutonomousRobots/cs393r_starter/src/shared/util/util/timer.h
+/u/amargol/Masters/Robots/projects/cs393r_starter/src/shared/util/util/timer.h
 inttypes.h
 -
 time.h

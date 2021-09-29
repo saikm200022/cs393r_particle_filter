@@ -7,6 +7,6 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/u/jdeans47/AutonomousRobots/cs393r_starter/build/devel:$CMAKE_PREFIX_PATH"
-export ROSLISP_PACKAGE_DIRECTORIES='/u/jdeans47/AutonomousRobots/cs393r_starter/build/devel/share/common-lisp'
-export ROS_PACKAGE_PATH='/u/jdeans47/AutonomousRobots/cs393r_starter:/opt/ros/melodic/share'
+export CMAKE_PREFIX_PATH="/u/amargol/Masters/Robots/projects/cs393r_starter/build/devel:$CMAKE_PREFIX_PATH"
+export ROSLISP_PACKAGE_DIRECTORIES='/u/amargol/Masters/Robots/projects/cs393r_starter/build/devel/share/common-lisp'
+export ROS_PACKAGE_PATH='/u/amargol/Masters/Robots/projects/cs393r_starter:/opt/ros/melodic/share'
