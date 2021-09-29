@@ -71,28 +71,27 @@ Eigen::Vector2f ParticleFilter::LaserScanToPoint(float angle, float distance) {
 
 // translate from robot frame to global frame
 Eigen::Vector2f ParticleFilter::RobotToGlobal (Eigen::Vector2f point, const Vector2f& loc, const float angle) {
-  Eigen::Matrix2f rot;
-  float ang = -angle;
-  rot(0,0) = cos(ang);
-  rot(0,1) = -sin(ang);
-  rot(1,0) = sin(ang);
-  rot(1,1) = cos(ang);
+  Eigen::Matrix2f rot = GetRotationMatrix(angle);
 
   auto translated_point = (rot * point) + loc;
   return translated_point;
 }
 
-// translate from robot frame to global frame
+// translate from global frame to robot frame
 Eigen::Vector2f ParticleFilter::GlobalToRobot (Eigen::Vector2f point, const Vector2f& loc, const float angle) {
-  Eigen::Matrix2f rot;
-  float ang = angle;
-  rot(0,0) = cos(ang);
-  rot(0,1) = -sin(ang);
-  rot(1,0) = sin(ang);
-  rot(1,1) = cos(ang);
+  Eigen::Matrix2f rot = GetRotationMatrix(-angle);
 
   auto translated_point = rot * (point - loc);
   return translated_point;
+}
+
+Eigen::Matrix2f ParticleFilter::GetRotationMatrix (const float angle) {
+  Eigen::Matrix2f rot;
+  rot(0,0) = cos(angle);
+  rot(0,1) = -sin(angle);
+  rot(1,0) = sin(angle);
+  rot(1,1) = cos(angle);
+  return rot;
 }
 
 void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
@@ -183,7 +182,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
   float angle = angle_min;
 
   // Calculate for each point in point cloud
-  for (unsigned index = 0; index < ranges.size(); index++) {
+  for (unsigned index = 0; index < ranges.size(); index+=10) {
     Vector2f true_point = LaserScanToPoint(angle, ranges[index]);
     Vector2f predicted_point = predicted_scan[index];
 
@@ -193,10 +192,10 @@ void ParticleFilter::Update(const vector<float>& ranges,
     // Original:
     double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
     likelihood *= term;
-    angle += angle_delta;
+    angle += 10*angle_delta;
   }
 
-    p_ptr->weight = gamma * log_likelihood;
+    p_ptr->weight = -gamma * log_likelihood;
   // p_ptr->weight = likelihood;
 
   // printf("Likelihood for particle: %lf\n", likelihood);
@@ -206,41 +205,62 @@ void ParticleFilter::Update(const vector<float>& ranges,
 void ParticleFilter::NormalizeWeights() {
   // This maybe needs to be readjusted bc log likelihood
   double weight_sum = 0;
+  double lowest = 0;
+  for (auto p : particles_) {
+    if (p.weight < lowest)
+      lowest = p.weight;
+  }
+
+  for (auto& p : particles_) {
+    p.weight -= lowest;
+  }
+
   for (auto p : particles_) {
     weight_sum += p.weight;
   }
 
-  for (auto& p : particles_) {
-    // printf("Old weight: %lf\n", p.weight);
+  if (weight_sum != 0) {
+    for (auto& p : particles_) {
+      // printf("Old weight: %lf\n", p.weight);
 
-    p.weight = p.weight / weight_sum;
-    // printf("New weight: %lf\n\n", p.weight);
+      p.weight = p.weight / weight_sum;
+      // printf("New weight: %lf\n\n", p.weight);
+    }
   }
 }
 
 int ParticleFilter::SearchBins(vector<float>& bins, float sample) {
-  // Does a binary search for the bin that the sample falls in
-  int upper = bins.size();
-  int lower = 0;
-  
-  int index = (lower + upper) / 2;
-  while (lower < upper) {
-    index = (lower + upper) / 2;
-    if (sample <= bins[index] && (index == 0 || sample > bins[index-1])) {
-      return index;
-    }
-
-    if (sample <= bins[index]) {
-      upper = index;
-    } 
-    else {
-      lower = index +1;
+  for (unsigned i = 0; i < bins.size(); i++) {
+    if (sample <= bins[i] && (i == 0 || sample > bins[i-1])) {
+      return i;
     }
   }
-
-  printf("forgot how to data structures");
-  return index;
+  return -1;
 }
+
+// int ParticleFilter::SearchBins(vector<float>& bins, float sample) {
+//   // Does a binary search for the bin that the sample falls in
+//   int upper = bins.size();
+//   int lower = 0;
+  
+//   int index = (lower + upper) / 2;
+//   while (lower < upper) {
+//     index = (lower + upper) / 2;
+//     if (sample <= bins[index] && (index == 0 || sample > bins[index-1])) {
+//       return index;
+//     }
+
+//     if (sample <= bins[index]) {
+//       upper = index;
+//     } 
+//     else {
+//       lower = index +1;
+//     }
+//   }
+
+//   printf("forgot how to data structures");
+//   return index;
+// }
 
 void ParticleFilter::Resample() {
   // Resample the particles, proportional to their weights.
@@ -266,6 +286,9 @@ void ParticleFilter::Resample() {
     // printf("Sample: %f\n", sample);
 
     int bin_index = SearchBins(bins, sample);
+    if (bin_index == -1) {
+      assert(0);
+    }
     new_particles.push_back(particles_[bin_index]);
   }
 
@@ -311,17 +334,21 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   } else {
     for (unsigned int i = 0; i < particles_.size(); i++)
     {
-      float delta_x = odom_loc[0] - prev_odom_loc[0];
-      float delta_y = odom_loc[1] - prev_odom_loc[1];
-      // printf("dX: %f, dY: %f \n", delta_x,delta_y);
-
-      float trans_x = delta_x * cos(prev_odom_angle) - delta_y * sin(prev_odom_angle);
-      float trans_y = delta_x * sin(prev_odom_angle) + delta_y * cos(prev_odom_angle);
-
       Particle particle = particles_[i];
-      float next_x = rng_.Gaussian(particle.loc[0] + trans_x, k * delta_x);
-      float next_y = rng_.Gaussian(particle.loc[1] + trans_y, k * delta_y);
-      float next_theta = rng_.Gaussian(particle.angle + odom_angle - prev_odom_angle, k * (odom_angle - prev_odom_angle));
+
+      // Slide 6:26-27
+      Vector2f delta_odom = odom_loc - prev_odom_loc;
+      Eigen::Matrix2f rot = GetRotationMatrix(-prev_odom_angle);
+
+      Vector2f delta_T_bl = rot * delta_odom;
+      Vector2f T_map = particle.loc + GetRotationMatrix(particle.angle) * delta_T_bl;
+
+      float delta_theta_bl = odom_angle - prev_odom_angle;
+      float theta_map = particle.angle + delta_theta_bl;
+      
+      float next_x = rng_.Gaussian(T_map[0], k );
+      float next_y = rng_.Gaussian(T_map[1], k );
+      float next_theta = rng_.Gaussian(theta_map, k);
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
       // printf("X: %f, Y: %f \n", next_x,next_y);
@@ -342,7 +369,7 @@ void ParticleFilter::Initialize(const string& map_file,
   // some distribution around the provided location and angle.
   map_.Load(map_file);
   printf("Initializing...\n");
-  // particles_.clear();
+  particles_.clear();
   double weight = 1.0 / num_initial_particles;
   for (int i = 0; i < num_initial_particles; i++) {
     float x = rng_.Gaussian(loc(0), initial_std_x);
@@ -361,9 +388,18 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // // of particles. The computed values must be set to the `loc` and `angle`
   // // variables to return them. Modify the following assignments:
   if (particles_.size() > 0) {
-    Particle p = particles_[0];
-    loc = p.loc;
-    angle = p.angle;
+    double x_sum = 0;
+    double y_sum = 0;
+    double theta_sum = 0;
+    for (auto particle : particles_) {
+      x_sum += particle.loc.x();
+      y_sum += particle.loc.y();
+      theta_sum += particle.angle;
+
+      double size = (double)particles_.size();
+      loc = Vector2f(x_sum / size, y_sum/size);
+      angle = theta_sum / size;
+    }
   } else {
     loc = Vector2f(0, 0);
     angle = 0;

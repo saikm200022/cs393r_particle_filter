@@ -89,7 +89,7 @@ class ParticleFilter {
   int SearchBins(std::vector<float>& bins, float sample);
   Eigen::Vector2f RobotToGlobal (Eigen::Vector2f point, const Eigen::Vector2f& loc, const float angle);
   Eigen::Vector2f GlobalToRobot (Eigen::Vector2f point, const Eigen::Vector2f& loc, const float angle);
-
+  Eigen::Matrix2f GetRotationMatrix (const float angle);
 
   // For debugging: get predicted point cloud from current location.
   void GetPredictedPointCloud(const Eigen::Vector2f& loc,
@@ -139,7 +139,7 @@ class ParticleFilter {
 
   int visualize_particle_filter = 1;
 
-  const int k = 1;
+  const int k = 0.1;
 
 
   // Added by us

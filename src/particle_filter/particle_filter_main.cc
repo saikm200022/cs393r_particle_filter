@@ -123,23 +123,25 @@ void PublishPredictedScan() {
       last_laser_msg_.angle_max,
       &predicted_scan);
   for (const Vector2f& p : predicted_scan) {
+    // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
     DrawPoint(p, kColor, vis_msg_);
+    
   }
 }
 
-void PublishMap() {
-  auto map = particle_filter_.map_;
-  const uint32_t kColor = 0xFF73D4;
+// void PublishMap() {
+//   auto map = particle_filter_.map_;
+//   const uint32_t kColor = 0xFF73D4;
 
-  for (size_t i = 0; i < map.lines.size(); ++i) {
-      const line2f map_line = map.lines[i];
-      DrawLine(map_line.p0,
-             map_line.p1,
-             kColor,
-             vis_msg_);
-  }
+//   for (size_t i = 0; i < map.lines.size(); ++i) {
+//       const line2f map_line = map.lines[i];
+//       DrawLine(map_line.p0,
+//              map_line.p1,
+//              kColor,
+//              vis_msg_);
+//   }
 
-}
+// }
 
 void PublishTrajectory() {
   const uint32_t kColor = 0xadadad;
@@ -164,6 +166,22 @@ void PublishTrajectory() {
   }
 }
 
+void PublishRealScan() {
+  // printf("Drawing real scan\n");
+  const uint32_t kColor = 0xFF73D4;
+
+  float angle_delta = (last_laser_msg_.angle_max - last_laser_msg_.angle_min) / last_laser_msg_.ranges.size();
+  float angle = last_laser_msg_.angle_min;
+
+  for (unsigned index = 0; index < last_laser_msg_.ranges.size(); index++) {
+    Vector2f true_point = particle_filter_.LaserScanToPoint(angle, last_laser_msg_.ranges[index]);
+    // printf("Point: %f %f\n", true_point.x(), true_point.y());
+    DrawPoint(true_point, kColor, vis_msg_);
+    angle += angle_delta;
+  }
+  visualization_publisher_.publish(vis_msg_);
+}
+
 void PublishVisualization() {
   static double t_last = 0;
   if (GetMonotonicTime() - t_last < 0.05) {
@@ -175,9 +193,10 @@ void PublishVisualization() {
   ClearVisualizationMsg(vis_msg_);
 
   PublishParticles();
+  PublishRealScan();
   PublishPredictedScan();
   PublishTrajectory();
-  PublishMap();
+  // PublishMap();
   visualization_publisher_.publish(vis_msg_);
 }
 
@@ -192,6 +211,8 @@ void LaserCallback(const sensor_msgs::LaserScan& msg) {
       msg.range_max,
       msg.angle_min,
       msg.angle_max);
+
+  
   PublishVisualization();
 }
 

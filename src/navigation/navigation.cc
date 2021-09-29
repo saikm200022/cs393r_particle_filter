@@ -257,9 +257,9 @@ void Navigation::Run() {
     drive_msg_.curvature = previous_curvature;
     drive_msg_.velocity = previous_velocity;
 
-  for (auto point : point_cloud_) {
-    visualization::DrawPoint(point,0x4287f5,local_viz_msg_);
-  }
+  // for (auto point : point_cloud_) {
+  //   visualization::DrawPoint(point,0x4287f5,local_viz_msg_);
+  // }
 
   // Add timestamps to all messages.
   local_viz_msg_.header.stamp = ros::Time::now();
