@@ -211,8 +211,6 @@ void ParticleFilter::NormalizeWeights() {
       lowest = p.weight;
   }
 
-
-
   for (auto& p : particles_) {
     p.weight -= lowest;
   }
@@ -302,6 +300,7 @@ void ParticleFilter::Resample() {
 
       // return;
     }
+    // printf("Bin # %d\n", bin_index);
     new_particles.push_back(particles_[bin_index]);
   }
 
@@ -321,13 +320,20 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   // Call the Update and Resample steps as necessary.
 
   num_scans_predicted = ranges.size();
-// 
-  // // Update the weights of the particles
-  for (auto& p_ptr : particles_) {
-    Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
+
+  if (distance_travelled < 0 || angle_travelled < 0) {
+    // // Update the weights of the particles
+    for (auto& p_ptr : particles_) {
+      Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
+    }
+
+    distance_travelled = .15;
+    angle_travelled = .175;
+  
   }
 
   Resample();
+
 }
 
 void ParticleFilter::Predict(const Vector2f& odom_loc,
@@ -336,7 +342,6 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // A new odometry value is available (in the odom frame)
   // Implement the motion model predict step here, to propagate the particles
   // forward based on odometry.
-
 
   // For first time step when odometry is not known:
   if (prev_odom_loc[0] == (float)-1000) {
@@ -348,6 +353,10 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
 
   else 
   {
+    float displacement = (odom_loc - prev_odom_loc).norm();
+    distance_travelled -= displacement;
+    angle_travelled -= abs(odom_angle - prev_odom_angle);
+
     for (unsigned int i = 0; i < particles_.size(); i++)
     {
       Particle particle = particles_[i];
