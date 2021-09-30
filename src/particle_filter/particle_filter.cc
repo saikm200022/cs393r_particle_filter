@@ -47,6 +47,11 @@ using Eigen::Vector2i;
 using vector_map::VectorMap;
 
 DEFINE_double(num_particles, 50, "Number of particles");
+const float kEpsilon = 1e-5;
+
+bool fEquals (float a, float b) {
+  return (a >= b - kEpsilon && a <= b + kEpsilon);
+}
 
 namespace particle_filter {
 
@@ -71,7 +76,7 @@ Eigen::Vector2f ParticleFilter::LaserScanToPoint(float angle, float distance) {
 
 // translate from robot frame to global frame
 Eigen::Vector2f ParticleFilter::RobotToGlobal (Eigen::Vector2f point, const Vector2f& loc, const float angle) {
-  Eigen::Matrix2f rot = GetRotationMatrix(angle);
+  Eigen::Matrix2f rot = GetRotationMatrix(-angle);
 
   auto translated_point = (rot * point) + loc;
   return translated_point;
@@ -79,7 +84,7 @@ Eigen::Vector2f ParticleFilter::RobotToGlobal (Eigen::Vector2f point, const Vect
 
 // translate from global frame to robot frame
 Eigen::Vector2f ParticleFilter::GlobalToRobot (Eigen::Vector2f point, const Vector2f& loc, const float angle) {
-  Eigen::Matrix2f rot = GetRotationMatrix(-angle);
+  Eigen::Matrix2f rot = GetRotationMatrix(angle);
 
   auto translated_point = rot * (point - loc);
   return translated_point;
@@ -182,20 +187,26 @@ void ParticleFilter::Update(const vector<float>& ranges,
   float angle = angle_min;
 
   // Calculate for each point in point cloud
-  for (unsigned index = 0; index < ranges.size(); index+=10) {
-    Vector2f true_point = LaserScanToPoint(angle, ranges[index]);
+  for (unsigned index = 0; index < ranges.size(); index++) {
+    float true_range = ranges[index];
+
+    if (true_range > range_max || true_range < range_min) 
+      continue;
+
+    Vector2f true_point = LaserScanToPoint(angle, true_range);
     Vector2f predicted_point = predicted_scan[index];
 
-    log_likelihood += pow(true_point.norm() - predicted_point.norm(), 2) / pow(update_variance, 2);
-
+    log_likelihood += pow((true_point - predicted_point).norm(), 2) / pow(update_variance, 2);
+    // printf("Distance between points: %f\n", (true_point - predicted_point).norm());
+    
     // Slide deck 7: 31-32
     // Original:
     double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
     likelihood *= term;
-    angle += 10*angle_delta;
+    angle += angle_delta;
   }
 
-    p_ptr->weight = -gamma * log_likelihood;
+    p_ptr->weight *= -gamma * log_likelihood;
   // p_ptr->weight = likelihood;
 
   // printf("Likelihood for particle: %lf\n", likelihood);
@@ -211,20 +222,26 @@ void ParticleFilter::NormalizeWeights() {
       lowest = p.weight;
   }
 
+  double reduce = abs(1.0 / lowest);
+
   for (auto& p : particles_) {
-    p.weight -= lowest;
+    p.weight *= reduce;
   }
 
   for (auto p : particles_) {
-    weight_sum += p.weight;
+    weight_sum += exp(p.weight);
   }
 
-  if (weight_sum != 0) {
+  if (!fEquals(weight_sum, 0.0)) {
     for (auto& p : particles_) {
       // printf("Old weight: %lf\n", p.weight);
 
-      p.weight = p.weight / weight_sum;
+      p.weight = exp(p.weight) / weight_sum;
       // printf("New weight: %lf\n\n", p.weight);
+    }
+  } else {
+    for (auto& p : particles_) {
+      p.weight = 1.0 / (float)particles_.size();
     }
   }
 }
@@ -270,7 +287,6 @@ void ParticleFilter::Resample() {
   if (particles_.size() < 1)
     return;
 
-  NormalizeWeights();
   // printf("Resampling\n");
   vector<Particle> new_particles;
 
@@ -288,15 +304,15 @@ void ParticleFilter::Resample() {
     int bin_index = SearchBins(bins, sample);
     if (bin_index == -1) {
       bin_index = (int)(sample * (float)bins.size());
-      // printf("No bins\n");
-      // printf("Bins size: %lu\n", bins.size());
-      // for (unsigned j = 0; j < bins.size(); j++) {
-      //   printf("Bin %u: %f\n", j, bins[j]);
-      // }
+      printf("No bins\n");
+      printf("Bins size: %lu\n", bins.size());
+      for (unsigned j = 0; j < bins.size(); j++) {
+        printf("Bin %u: %f\n", j, bins[j]);
+      }
 
-      // for (unsigned k = 0; k < particles_.size(); k++) {
-      //   printf("Particle %u: %lf\n", k, particles_[k].weight);
-      // }
+      for (unsigned k = 0; k < particles_.size(); k++) {
+        printf("Particle %u: %lf\n", k, particles_[k].weight);
+      }
 
       // return;
     }
@@ -326,11 +342,12 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     for (auto& p_ptr : particles_) {
       Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
     }
+    NormalizeWeights();
+
     num_updates -= 1;
 
     distance_travelled = .15;
     angle_travelled = .175;
-  
   }
 
   if (num_updates <= 0)
@@ -419,18 +436,28 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // // Compute the best estimate of the robot's location based on the current set
   // // of particles. The computed values must be set to the `loc` and `angle`
   // // variables to return them. Modify the following assignments:
+
   if (particles_.size() > 0) {
     double x_sum = 0;
     double y_sum = 0;
     double theta_sum = 0;
+    double weight_sum = 0;
     for (auto particle : particles_) {
       x_sum += particle.loc.x();
       y_sum += particle.loc.y();
       theta_sum += particle.angle;
+      weight_sum += particle.weight;
     }
-    
+
+    // for (auto particle : particles_) {
+    //   double w = particle.weight / weight_sum;
+    //   x_sum += particle.loc.x() * w;
+    //   y_sum += particle.loc.y() * w;
+    //   theta_sum += particle.angle * w;
+    // }
+
     double size = (double)particles_.size();
-    loc = Vector2f(x_sum / size, y_sum/size);
+    loc = Vector2f(x_sum / size, y_sum / size);
     angle = theta_sum / size;
     
   } else {
