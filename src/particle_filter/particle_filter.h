@@ -130,7 +130,7 @@ class ParticleFilter {
 
   // Standard deviation of the sensor
   // Seems pretty small?
-  double update_variance = 0.01;
+  double update_variance = 0.15;
 
   // Account for correlation between rays on update step
   // 1    -> no correlation
@@ -145,6 +145,11 @@ class ParticleFilter {
   // Added by us
   Eigen::Vector2f prev_odom_loc = Eigen::Vector2f(-1000, -1000);
   float prev_odom_angle = 0;
+
+  float distance_travelled = .15;
+  float angle_travelled = .175;
+
+  int num_updates = 10;
 };
 }  // namespace slam
 
