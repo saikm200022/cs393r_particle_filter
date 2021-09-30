@@ -412,11 +412,12 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
       x_sum += particle.loc.x();
       y_sum += particle.loc.y();
       theta_sum += particle.angle;
-
-      double size = (double)particles_.size();
-      loc = Vector2f(x_sum / size, y_sum/size);
-      angle = theta_sum / size;
     }
+    
+    double size = (double)particles_.size();
+    loc = Vector2f(x_sum / size, y_sum/size);
+    angle = theta_sum / size;
+    
   } else {
     loc = Vector2f(0, 0);
     angle = 0;
