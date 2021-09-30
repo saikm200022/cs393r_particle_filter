@@ -120,9 +120,9 @@ class ParticleFilter {
 
   const int num_initial_particles = 50;
 
-  const double initial_std_x = 0.1;
-  const double initial_std_y = 0.1;
-  const double initial_std_theta = M_PI / 15;
+  const double initial_std_x = 0.2;
+  const double initial_std_y = 0.2;
+  const double initial_std_theta = M_PI / 12;
 
   const double laser_x_offset = 0.2;
 
@@ -139,8 +139,8 @@ class ParticleFilter {
 
   int visualize_particle_filter = 1;
 
-  const int k = 0.1;
-  const int odom_var_x = 0.2;
+  const int k = 0.3;
+  const int odom_var_x = 0.1;
   const int odom_var_y = 0.1;
   const int odom_var_t = 0.1;
 
@@ -152,6 +152,8 @@ class ParticleFilter {
 
   float distance_travelled = .15;
   float angle_travelled = .175;
+
+  int laser_point_trim = 1;
 
   int num_updates = 10;
 };

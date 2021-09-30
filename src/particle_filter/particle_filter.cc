@@ -121,7 +121,7 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
   float theta = angle_min;
 
   // Create the laser scan points
-  for (int i = 0; i < num_ranges; i +=10) {
+  for (int i = 0; i < num_ranges; i += laser_point_trim) {
     // Initialize with max range
     Vector2f robot_point = LaserScanToPoint(theta, range_max);
     Vector2f global_point = RobotToGlobal(robot_point, loc, angle);
@@ -157,7 +157,7 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
     // printf("Robot point original norm: %lf\n", robot_point.norm());
     // printf("Robot point final norm:    %lf\n", scan[i].norm());
 
-    theta += 10*angle_delta;
+    theta += laser_point_trim*angle_delta;
   }
 }
 
@@ -187,7 +187,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
   float angle = angle_min;
 
   // Calculate for each point in point cloud
-  for (unsigned index = 0; index < ranges.size(); index+=10) {
+  for (unsigned index = 0; index < ranges.size(); index+=laser_point_trim) {
     float true_range = ranges[index];
 
     if (true_range > range_max || true_range < range_min) 
@@ -203,7 +203,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
     // Original:
     double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
     likelihood *= term;
-    angle += 10*angle_delta;
+    angle += laser_point_trim*angle_delta;
   }
 
     p_ptr->weight *= -gamma * log_likelihood;
@@ -215,14 +215,23 @@ void ParticleFilter::Update(const vector<float>& ranges,
 
 void ParticleFilter::NormalizeWeights() {
   // This maybe needs to be readjusted bc log likelihood
+  if (particles_.size() < 1) 
+    return;
+
   double weight_sum = 0;
-  double lowest = 500000000;
+
+  double max = particles_[0].weight;
   for (auto p : particles_) {
-    if (p.weight < lowest)
-      lowest = p.weight;
+    if (p.weight > max && !fEquals(p.weight, 0.0))
+      max = p.weight;
   }
 
-  double reduce = abs(1.0 / lowest);
+  double reduce = 1.0;
+  if (fEquals(max, 0.0)) {
+    reduce = abs(1.0 / 500.0);
+  } else {
+    reduce = abs(1.0 / max);
+  }
 
   for (auto& p : particles_) {
     p.weight *= reduce;
@@ -304,15 +313,16 @@ void ParticleFilter::Resample() {
     int bin_index = SearchBins(bins, sample);
     if (bin_index == -1) {
       bin_index = (int)(sample * (float)bins.size());
-      printf("No bins\n");
-      printf("Bins size: %lu\n", bins.size());
-      for (unsigned j = 0; j < bins.size(); j++) {
-        printf("Bin %u: %f\n", j, bins[j]);
-      }
+      printf("Bins are NaN/0\n");
+      return;
+      // printf("Bins size: %lu\n", bins.size());
+      // for (unsigned j = 0; j < bins.size(); j++) {
+      //   printf("Bin %u: %f\n", j, bins[j]);
+      // }
 
-      for (unsigned k = 0; k < particles_.size(); k++) {
-        printf("Particle %u: %lf\n", k, particles_[k].weight);
-      }
+      // for (unsigned k = 0; k < particles_.size(); k++) {
+      //   printf("Particle %u: %lf\n", k, particles_[k].weight);
+      // }
 
       // return;
     }
