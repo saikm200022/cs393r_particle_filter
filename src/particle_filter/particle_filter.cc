@@ -121,7 +121,7 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
   float theta = angle_min;
 
   // Create the laser scan points
-  for (int i = 0; i < num_ranges; ++i) {
+  for (int i = 0; i < num_ranges; i +=10) {
     // Initialize with max range
     Vector2f robot_point = LaserScanToPoint(theta, range_max);
     Vector2f global_point = RobotToGlobal(robot_point, loc, angle);
@@ -129,8 +129,8 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
     // compare with lines on map
     // Optimize this with AABB if time permits
     // printf("Length of map file: %lud\n", map_.lines.size());
-    for (size_t i = 0; i < map_.lines.size(); ++i) {
-      const line2f map_line = map_.lines[i];
+    for (size_t j = 0; j < map_.lines.size(); ++j) {
+      const line2f map_line = map_.lines[j];
       // printf("Map line: %f %f   %f %f\n", map_line.p0.x(), map_line.p0.y(), map_line.p1.x(), map_line.p1.y());
       
       line2f scan_line(loc.x(), loc.y(), global_point.x(), global_point.y());
@@ -157,7 +157,7 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
     // printf("Robot point original norm: %lf\n", robot_point.norm());
     // printf("Robot point final norm:    %lf\n", scan[i].norm());
 
-    theta += angle_delta;
+    theta += 10*angle_delta;
   }
 }
 
@@ -187,7 +187,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
   float angle = angle_min;
 
   // Calculate for each point in point cloud
-  for (unsigned index = 0; index < ranges.size(); index++) {
+  for (unsigned index = 0; index < ranges.size(); index+=10) {
     float true_range = ranges[index];
 
     if (true_range > range_max || true_range < range_min) 
@@ -203,7 +203,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
     // Original:
     double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
     likelihood *= term;
-    angle += angle_delta;
+    angle += 10*angle_delta;
   }
 
     p_ptr->weight *= -gamma * log_likelihood;
