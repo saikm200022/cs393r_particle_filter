@@ -118,10 +118,10 @@ class ParticleFilter {
   float prev_odom_angle_;
   bool odom_initialized_;
 
-  const int num_initial_particles = 100;
+  const int num_initial_particles = 50;
 
-  const double initial_std_x = 1;
-  const double initial_std_y = 1;
+  const double initial_std_x = 0.5;
+  const double initial_std_y = 0.5;
   const double initial_std_theta = M_PI / 12;
 
   const double laser_x_offset = 0.2;

@@ -219,13 +219,14 @@ void ParticleFilter::NormalizeWeights() {
     return;
 
   double weight_sum = 0;
-
+  // Find Max Weight
   double max = particles_[0].weight;
   for (auto p : particles_) {
-    if (p.weight > max && !fEquals(p.weight, 0.0))
+    if (p.weight < max && !fEquals(p.weight, 0.0))
       max = p.weight;
   }
 
+  // Get reduction factor
   double reduce = 1.0;
   if (fEquals(max, 0.0)) {
     reduce = abs(1.0 / 500.0);
@@ -233,6 +234,7 @@ void ParticleFilter::NormalizeWeights() {
     reduce = abs(1.0 / max);
   }
 
+  // scale every weight
   for (auto& p : particles_) {
     p.weight *= reduce;
   }
@@ -303,11 +305,13 @@ void ParticleFilter::Resample() {
   double running_sum = 0;
   for (unsigned i = 0; i < particles_.size(); i++) {
     running_sum += particles_[i].weight;
+    printf("%d ", (int) (particles_[i].weight * 100));
     bins.push_back(running_sum);
   }
+  printf("\n");
 
-  for (unsigned i = 0; i < particles_.size(); i++) {
     float sample = rng_.UniformRandom(0, 1);
+  for (unsigned i = 0; i < particles_.size(); i++) {
     // printf("Sample: %f\n", sample);
 
     int bin_index = SearchBins(bins, sample);
@@ -328,7 +332,15 @@ void ParticleFilter::Resample() {
     }
     // printf("Bin # %d\n", bin_index);
     new_particles.push_back(particles_[bin_index]);
+    float oon = 1/((float) num_initial_particles);
+    sample += oon;
+    if (sample >= 1)
+      sample -= 1;
+
+    printf("%d ", bin_index);
   }
+
+  printf("\n");
 
   for (Particle& p : new_particles) {
     p.weight = 1.0 / (double)new_particles.size();
