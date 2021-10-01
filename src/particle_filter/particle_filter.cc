@@ -400,15 +400,16 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
       // R(theta_1^Map) * delta T_base_link
       Vector2f delta_T_bl = rot * delta_odom;
       // T_2^Map = T_1^Map + ...
+      Vector2f translation = GetRotationMatrix(particle.angle) * delta_T_bl;
       Vector2f T_map = particle.loc + GetRotationMatrix(particle.angle) * delta_T_bl;
 
       float delta_theta_bl = odom_angle - prev_odom_angle;
       float theta_map = particle.angle + delta_theta_bl;
       
       // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
-      float next_x = rng_.Gaussian(T_map[0], k );
-      float next_y = rng_.Gaussian(T_map[1], k );
-      float next_theta = rng_.Gaussian(theta_map, k);
+      float next_x = rng_.Gaussian(T_map[0], k * abs(translation[0]) );
+      float next_y = rng_.Gaussian(T_map[1], k * abs(translation[1]));
+      float next_theta = rng_.Gaussian(theta_map, k * abs(delta_theta_bl));
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
       particles_[i].angle = next_theta;
@@ -452,11 +453,15 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     double y_sum = 0;
     double theta_sum = 0;
     double weight_sum = 0;
+    double cos_sum = 0.0;
+    double sin_sum = 0.0;
     for (auto particle : particles_) {
       x_sum += particle.loc.x();
       y_sum += particle.loc.y();
       theta_sum += particle.angle;
       weight_sum += particle.weight;
+      cos_sum += cos(particle.angle);
+      sin_sum += sin(particle.angle);
     }
 
     // for (auto particle : particles_) {
@@ -468,7 +473,7 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
 
     double size = (double)particles_.size();
     loc = Vector2f(x_sum / size, y_sum / size);
-    angle = theta_sum / size;
+    angle = atan2(sin_sum / size,cos_sum / size);
     
   } else {
     loc = Vector2f(0, 0);
