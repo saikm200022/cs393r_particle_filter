@@ -192,13 +192,23 @@ void ParticleFilter::Update(const vector<float>& ranges,
 
     if (true_range > range_max || true_range < range_min) 
       continue;
-
+    // Vector2f robot_loc(0, 0);
+    // float robot_angle(0);
+    // GetLocation(&robot_loc, &robot_angle);
     Vector2f true_point = LaserScanToPoint(angle, true_range);
+    //true_point = RobotToGlobal(true_point, robot_loc, robot_angle);
     Vector2f predicted_point = predicted_scan[index];
 
-    log_likelihood += pow((true_point - predicted_point).norm(), 2) / pow(update_variance, 2);
+    Eigen::Vector2f difference = true_point - predicted_point;
+
+    if (difference[0] < -d_short[0] && difference[1] < -d_short[1])
+      log_likelihood += pow(d_short.norm(), 2) / pow(update_variance, 2);
+    else if (difference[0] > d_long[0] && difference[1] > d_long[1])
+      log_likelihood += pow(d_long.norm(), 2) / pow(update_variance, 2);
+    else
+      log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
     // printf("Distance between points: %f\n", (true_point - predicted_point).norm());
-    
+  
     // Slide deck 7: 31-32
     // Original:
     double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
@@ -206,7 +216,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
     angle += laser_point_trim*angle_delta;
   }
 
-    p_ptr->weight *= -gamma * log_likelihood;
+    p_ptr->weight = -gamma * log_likelihood;
   // p_ptr->weight = likelihood;
 
   // printf("Likelihood for particle: %lf\n", likelihood);
@@ -248,6 +258,7 @@ void ParticleFilter::NormalizeWeights() {
       // printf("Old weight: %lf\n", p.weight);
 
       p.weight = exp(p.weight) / weight_sum;
+      printf("NORMALIZE WEIGHTS AF: %f\n", p.weight);
       // printf("New weight: %lf\n\n", p.weight);
     }
   } else {
@@ -375,7 +386,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   if (num_updates <= 0)
   {
     Resample();
-    num_updates = 10;
+    num_updates = 5;
   }
 
 }
@@ -459,7 +470,6 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // // Compute the best estimate of the robot's location based on the current set
   // // of particles. The computed values must be set to the `loc` and `angle`
   // // variables to return them. Modify the following assignments:
-
   if (particles_.size() > 0) {
     double x_sum = 0;
     double y_sum = 0;

@@ -155,7 +155,11 @@ class ParticleFilter {
 
   int laser_point_trim = 1;
 
-  int num_updates = 10;
+  int num_updates = 5;
+
+  Eigen::Vector2f d_short = Eigen::Vector2f(10, 10);
+  Eigen::Vector2f d_long = Eigen::Vector2f(10, 10);
+
 };
 }  // namespace slam
 

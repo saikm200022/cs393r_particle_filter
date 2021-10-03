@@ -64,6 +64,7 @@ using visualization::DrawArc;
 using visualization::DrawPoint;
 using visualization::DrawLine;
 using visualization::DrawParticle;
+using visualization::DrawCross;
 
 // Create command line arguements
 DEFINE_string(laser_topic, "/scan", "Name of ROS topic for LIDAR data");
@@ -102,9 +103,24 @@ void InitializeMsgs() {
 void PublishParticles() {
   vector<particle_filter::Particle> particles;
   particle_filter_.GetParticles(&particles);
+  float s = 0;
   for (const particle_filter::Particle& p : particles) {
+    // printf("PARTICLE WEIGHT: %f\n", p.weight);
+    if (p.weight < 0.016)
+      DrawPoint(p.loc, 0xf5c242 ,  vis_msg_);
+    if (p.weight < 0.02)
+      DrawPoint(p.loc, 0x000000 ,  vis_msg_);
+    else if (p.weight < 0.045)
+      DrawPoint(p.loc, 0x57f542 , vis_msg_);
+
+    else
+      DrawPoint(p.loc, 0xef42f5, vis_msg_);
+
+
     DrawParticle(p.loc, p.angle, vis_msg_);
+    s+= p.weight;
   }
+  printf("SUM: %f\n", s);
 }
 
 void PublishPredictedScan() {
