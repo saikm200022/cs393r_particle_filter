@@ -193,11 +193,8 @@ void ParticleFilter::Update(const vector<float>& ranges,
 
     if (true_range > range_max || true_range < range_min) 
       continue;
-    // Vector2f robot_loc(0, 0);
-    // float robot_angle(0);
-    // GetLocation(&robot_loc, &robot_angle);
+
     Vector2f true_point = LaserScanToPoint(angle, true_range);
-    //true_point = RobotToGlobal(true_point, robot_loc, robot_angle);
     Vector2f predicted_point = predicted_scan[index];
 
     Eigen::Vector2f difference = true_point - predicted_point;
@@ -442,7 +439,7 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
       // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
       float next_x = rng_.Gaussian(T_map[0], k * 4 * abs(translation[0]));
       float next_y = rng_.Gaussian(T_map[1], k * 4  * abs(translation[1]));
-      float next_theta = rng_.Gaussian(theta_map, k * 4 * abs(delta_theta_bl));
+      float next_theta = rng_.Gaussian(theta_map, k * 10 * abs(delta_theta_bl));
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
       particles_[i].angle = next_theta;
@@ -480,6 +477,8 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // // Compute the best estimate of the robot's location based on the current set
   // // of particles. The computed values must be set to the `loc` and `angle`
   // // variables to return them. Modify the following assignments:
+  std::map<float, int> xcoords;
+  std::map<float, int> ycoords;
   if (particles_.size() > 0) {
     double x_sum = 0;
     double y_sum = 0;
@@ -488,6 +487,16 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     double cos_sum = 0.0;
     double sin_sum = 0.0;
     for (auto particle : particles_) {
+      if (xcoords.count(particle.loc.x()))
+        xcoords[particle.loc.x()] = xcoords[particle.loc.x()] + 1;
+      else
+        xcoords[particle.loc.x()] = 1;
+      
+      if (ycoords.count(particle.loc.y()))
+        ycoords[particle.loc.y()] = ycoords[particle.loc.y()] + 1;
+      else
+        ycoords[particle.loc.y()] = 1;
+
       x_sum += particle.loc.x();
       y_sum += particle.loc.y();
       theta_sum += particle.angle;
@@ -507,6 +516,20 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     loc = Vector2f(x_sum / size, y_sum / size);
     angle = atan2(sin_sum / size,cos_sum / size);
     
+    // float most_freq_x = 0.0;
+    // int max_count = -1;
+    // for(auto it = xcoords.cbegin(); it != xcoords.cend(); ++it)
+    // {
+    //   if (it->second > max_count)
+    //   {
+    //     most_freq_x = it->first;
+    //     max_count = it->second;
+    //   }
+    // }
+    // loc[0] = most_freq_x;
+
+    // printf("FREQS: %f COUNT: %d", most_freq_x, max_count);
+
   } else {
     loc = Vector2f(0, 0);
     angle = 0;

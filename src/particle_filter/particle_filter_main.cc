@@ -111,7 +111,7 @@ void PublishParticles() {
     if (p.weight < 0.02)
       DrawPoint(p.loc, 0x000000 ,  vis_msg_);
     else if (p.weight < 0.025)
-      DrawPoint(p.loc, 0x57f542 , vis_msg_);
+      DrawPoint(p.loc, 0x00 , vis_msg_);
 
     else
       DrawPoint(p.loc, 0xef42f5, vis_msg_);
