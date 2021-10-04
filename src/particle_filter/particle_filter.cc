@@ -26,6 +26,7 @@
 #include "eigen3/Eigen/Geometry"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
+#include <map>
 #include "shared/math/geometry.h"
 #include "shared/math/line2d.h"
 #include "shared/math/math_util.h"
@@ -192,23 +193,27 @@ void ParticleFilter::Update(const vector<float>& ranges,
 
     if (true_range > range_max || true_range < range_min) 
       continue;
-    // Vector2f robot_loc(0, 0);
-    // float robot_angle(0);
-    // GetLocation(&robot_loc, &robot_angle);
+
     Vector2f true_point = LaserScanToPoint(angle, true_range);
-    //true_point = RobotToGlobal(true_point, robot_loc, robot_angle);
     Vector2f predicted_point = predicted_scan[index];
 
     Eigen::Vector2f difference = true_point - predicted_point;
 
-    if (difference[0] < -d_short[0] && difference[1] < -d_short[1])
+    if (difference[0] < -d_short[0] || difference[1] < -d_short[1])
+    {
       log_likelihood += pow(d_short.norm(), 2) / pow(update_variance, 2);
-    else if (difference[0] > d_long[0] && difference[1] > d_long[1])
+    }
+    else if (difference[0] > d_long[0] || difference[1] > d_long[1])
+    {
       log_likelihood += pow(d_long.norm(), 2) / pow(update_variance, 2);
+    }
     else
+    {
+      // printf("other \n");
       log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
+    }
     // printf("Distance between points: %f\n", (true_point - predicted_point).norm());
-  
+
     // Slide deck 7: 31-32
     // Original:
     double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
@@ -258,7 +263,7 @@ void ParticleFilter::NormalizeWeights() {
       // printf("Old weight: %lf\n", p.weight);
 
       p.weight = exp(p.weight) / weight_sum;
-      printf("NORMALIZE WEIGHTS AF: %f\n", p.weight);
+      // printf("NORMALIZE WEIGHTS AF: %f\n", p.weight);
       // printf("New weight: %lf\n\n", p.weight);
     }
   } else {
@@ -316,15 +321,17 @@ void ParticleFilter::Resample() {
   double running_sum = 0;
   for (unsigned i = 0; i < particles_.size(); i++) {
     running_sum += particles_[i].weight;
-    printf("%d ", (int) (particles_[i].weight * 100));
+    printf("%f ", (particles_[i].weight));
     bins.push_back(running_sum);
   }
   printf("\n");
 
     float sample = rng_.UniformRandom(0, 1);
+    printf("%d\n", total_time);
   for (unsigned i = 0; i < particles_.size(); i++) {
     // printf("Sample: %f\n", sample);
-
+    if (total_time < 100)
+      sample = rng_.UniformRandom(0, 1);
     int bin_index = SearchBins(bins, sample);
     if (bin_index == -1) {
       bin_index = (int)(sample * (float)bins.size());
@@ -343,7 +350,7 @@ void ParticleFilter::Resample() {
     }
     // printf("Bin # %d\n", bin_index);
     new_particles.push_back(particles_[bin_index]);
-    float oon = 1/((float) num_initial_particles);
+    float oon = 1/((float) (1.0 * num_initial_particles));
     sample += oon;
     if (sample >= 1)
       sample -= 1;
@@ -369,7 +376,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   // Call the Update and Resample steps as necessary.
 
   num_scans_predicted = ranges.size();
-
+  total_time += 1;
   if (distance_travelled < 0 || angle_travelled < 0) {
     // // Update the weights of the particles
     for (auto& p_ptr : particles_) {
@@ -430,9 +437,9 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
       float theta_map = particle.angle + delta_theta_bl;
       
       // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
-      float next_x = rng_.Gaussian(T_map[0], k * abs(translation[0]) );
-      float next_y = rng_.Gaussian(T_map[1], k * abs(translation[1]));
-      float next_theta = rng_.Gaussian(theta_map, k * abs(delta_theta_bl));
+      float next_x = rng_.Gaussian(T_map[0], k * 4 * abs(translation[0]));
+      float next_y = rng_.Gaussian(T_map[1], k * 4  * abs(translation[1]));
+      float next_theta = rng_.Gaussian(theta_map, k * 10 * abs(delta_theta_bl));
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
       particles_[i].angle = next_theta;
@@ -470,6 +477,8 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // // Compute the best estimate of the robot's location based on the current set
   // // of particles. The computed values must be set to the `loc` and `angle`
   // // variables to return them. Modify the following assignments:
+  std::map<float, int> xcoords;
+  std::map<float, int> ycoords;
   if (particles_.size() > 0) {
     double x_sum = 0;
     double y_sum = 0;
@@ -478,6 +487,16 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     double cos_sum = 0.0;
     double sin_sum = 0.0;
     for (auto particle : particles_) {
+      if (xcoords.count(particle.loc.x()))
+        xcoords[particle.loc.x()] = xcoords[particle.loc.x()] + 1;
+      else
+        xcoords[particle.loc.x()] = 1;
+      
+      if (ycoords.count(particle.loc.y()))
+        ycoords[particle.loc.y()] = ycoords[particle.loc.y()] + 1;
+      else
+        ycoords[particle.loc.y()] = 1;
+
       x_sum += particle.loc.x();
       y_sum += particle.loc.y();
       theta_sum += particle.angle;
@@ -497,6 +516,20 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     loc = Vector2f(x_sum / size, y_sum / size);
     angle = atan2(sin_sum / size,cos_sum / size);
     
+    // float most_freq_x = 0.0;
+    // int max_count = -1;
+    // for(auto it = xcoords.cbegin(); it != xcoords.cend(); ++it)
+    // {
+    //   if (it->second > max_count)
+    //   {
+    //     most_freq_x = it->first;
+    //     max_count = it->second;
+    //   }
+    // }
+    // loc[0] = most_freq_x;
+
+    // printf("FREQS: %f COUNT: %d", most_freq_x, max_count);
+
   } else {
     loc = Vector2f(0, 0);
     angle = 0;

@@ -153,13 +153,13 @@ class ParticleFilter {
   float distance_travelled = .15;
   float angle_travelled = .175;
 
-  int laser_point_trim = 1;
+  int laser_point_trim = 100;
 
   int num_updates = 5;
 
-  Eigen::Vector2f d_short = Eigen::Vector2f(10, 10);
-  Eigen::Vector2f d_long = Eigen::Vector2f(10, 10);
-
+  Eigen::Vector2f d_short = Eigen::Vector2f(10, 2);
+  Eigen::Vector2f d_long = Eigen::Vector2f(10, 2);
+  int total_time = 0;
 };
 }  // namespace slam
 
