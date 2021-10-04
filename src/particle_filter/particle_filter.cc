@@ -212,20 +212,12 @@ void ParticleFilter::Update(const vector<float>& ranges,
       // printf("other \n");
       log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
     }
-    // printf("Distance between points: %f\n", (true_point - predicted_point).norm());
-
-    // Slide deck 7: 31-32
-    // Original:
+    
     double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
     likelihood *= term;
     angle += laser_point_trim*angle_delta;
   }
-
-    p_ptr->weight = -gamma * log_likelihood;
-  // p_ptr->weight = likelihood;
-
-  // printf("Likelihood for particle: %lf\n", likelihood);
-  // printf("Log Likelihood for particle: %lf\n", gamma * log_likelihood);
+  p_ptr->weight = -gamma * log_likelihood;
 }
 
 void ParticleFilter::NormalizeWeights() {
@@ -437,9 +429,9 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
       float theta_map = particle.angle + delta_theta_bl;
       
       // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
-      float next_x = rng_.Gaussian(T_map[0], k * 4 * abs(translation[0]));
-      float next_y = rng_.Gaussian(T_map[1], k * 4  * abs(translation[1]));
-      float next_theta = rng_.Gaussian(theta_map, k * 10 * abs(delta_theta_bl));
+      float next_x = rng_.Gaussian(T_map[0], k * abs(translation[0]));
+      float next_y = rng_.Gaussian(T_map[1], k  * abs(translation[1]));
+      float next_theta = rng_.Gaussian(theta_map, k * 0.5 *  abs(delta_theta_bl));
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
       particles_[i].angle = next_theta;
