@@ -110,7 +110,7 @@ void PublishParticles() {
       DrawPoint(p.loc, 0xf5c242 ,  vis_msg_);
     if (p.weight < 0.02)
       DrawPoint(p.loc, 0x000000 ,  vis_msg_);
-    else if (p.weight < 0.045)
+    else if (p.weight < 0.025)
       DrawPoint(p.loc, 0x57f542 , vis_msg_);
 
     else
@@ -120,7 +120,6 @@ void PublishParticles() {
     DrawParticle(p.loc, p.angle, vis_msg_);
     s+= p.weight;
   }
-  printf("SUM: %f\n", s);
 }
 
 void PublishPredictedScan() {
