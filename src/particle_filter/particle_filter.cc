@@ -431,9 +431,9 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
       float theta_map = particle.angle + delta_theta_bl;
       
       // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
-      float next_x = rng_.Gaussian(T_map[0], k * abs(translation[0]));
-      float next_y = rng_.Gaussian(T_map[1], k * abs(translation[1]));
-      float next_theta = rng_.Gaussian(theta_map, k * 0.5 *  abs(delta_theta_bl));
+      float next_x = rng_.Gaussian(T_map[0], k * 0.1 * abs(translation[0]));
+      float next_y = rng_.Gaussian(T_map[1], k * 0.1 * abs(translation[1]));
+      float next_theta = rng_.Gaussian(theta_map, k * 0.1 *  abs(delta_theta_bl));
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
       particles_[i].angle = next_theta;
@@ -488,9 +488,9 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     }
 
     double size = (double)particles_.size();
-    if (total_time % 30 == 0)
+    if (total_time % 1 == 0)
     {
-      Particle location = KMeansClustering(3, x_sum/size, y_sum/size);
+      Particle location = KMeansClustering(2, x_sum/size, y_sum/size);
       loc = location.loc;
     }
 
@@ -512,8 +512,8 @@ Particle ParticleFilter::KMeansClustering(int k, float x_init, float y_init) con
   for (int i = 0; i < k; i++)
   {
     Particle p;
-    p.loc[0] = rand() % 10 * k + x_init +  rand() % 10 * -k;
-    p.loc[1] = rand() % 10 * k + y_init +  rand() % 10 * -k;
+    p.loc[0] = rand() % k / 2 + x_init +  rand() %  -k / 2 ;
+    p.loc[1] = rand() % k / 2  + y_init +  rand() %  -k / 2;
     printf("MUS Location: %f %f\n", p.loc[0], p.loc[1]);
     mus[i] = p;
   }
