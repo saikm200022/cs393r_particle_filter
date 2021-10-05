@@ -432,7 +432,7 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
       
       // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
       float next_x = rng_.Gaussian(T_map[0], k * abs(translation[0]));
-      float next_y = rng_.Gaussian(T_map[1], k  * abs(translation[1]));
+      float next_y = rng_.Gaussian(T_map[1], k * abs(translation[1]));
       float next_theta = rng_.Gaussian(theta_map, k * 0.5 *  abs(delta_theta_bl));
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
@@ -487,16 +487,16 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
       sin_sum += sin(particle.angle);
     }
 
-    // for (auto particle : particles_) {
-    //   double w = particle.weight / weight_sum;
-    //   x_sum += particle.loc.x() * w;
-    //   y_sum += particle.loc.y() * w;
-    //   theta_sum += particle.angle * w;
-    // }
     double size = (double)particles_.size();
-    Particle location = KMeansClustering(3, x_sum/size, y_sum/size);
-    loc = location.loc;
-    printf("Estimated Location: %f %f\n", loc[0], loc[1]);
+    if (total_time % 30 == 0)
+    {
+      Particle location = KMeansClustering(3, x_sum/size, y_sum/size);
+      loc = location.loc;
+    }
+
+      loc = Vector2f(x_sum/size, y_sum/size);
+
+    // printf("Estimated Location: %f %f\n", loc[0], loc[1]);
     // throw std::invalid_argument( "received negative value" );
     angle = atan2(sin_sum / size,cos_sum / size);
   } else {
@@ -512,8 +512,8 @@ Particle ParticleFilter::KMeansClustering(int k, float x_init, float y_init) con
   for (int i = 0; i < k; i++)
   {
     Particle p;
-    p.loc[0] = rand() % k + x_init;
-    p.loc[1] = rand() % k + y_init;
+    p.loc[0] = rand() % 10 * k + x_init +  rand() % 10 * -k;
+    p.loc[1] = rand() % 10 * k + y_init +  rand() % 10 * -k;
     printf("MUS Location: %f %f\n", p.loc[0], p.loc[1]);
     mus[i] = p;
   }
@@ -568,7 +568,7 @@ Particle ParticleFilter::KMeansClustering(int k, float x_init, float y_init) con
       next_p.loc.y() = new_mean_y;
       next_mus[i] = next_p;
       // printf("DIFF: %f\n",pow((next_mus[i].loc - mus[i].loc).norm(), 0.5));
-      if (abs(pow((next_mus[i].loc - mus[i].loc).norm(), 0.5)) > 0.01)
+      if (abs(pow((next_mus[i].loc - mus[i].loc).norm(), 0.5)) > 0.001)
           converged = false;
         
       if (most_counts < counts[i])
