@@ -529,4 +529,69 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
 }
 
 
+Particle ParticleFilter::KMeansClustering(int k)
+{
+  Particle mus[k];
+  for (int i = 0; i < k; i++)
+  {
+    Particle p;
+    p.loc[0] = rand() % 200 - 100;
+    p.loc[1] = rand() % 200 - 100;
+
+    mus[i] = p;
+  }
+  
+  while (true)
+  {
+    float new_mu_x[k];
+    float new_mu_y[k];
+    int counts[k];
+    for (auto p : particles_)
+    {
+      float closest_mean = 10000000000;
+      int label = 0;
+      for (int i = 0; i < k; i++)
+      {
+          float distance = (p.loc - mus[k].loc).norm();
+          if (distance < closest_mean)
+          {
+            closest_mean = distance;
+            label = i;
+          }
+      }
+
+      new_mu_x[label] += p.loc.x();
+      new_mu_y[label] += p.loc.y();
+      counts[label] += 1;
+    }
+
+    bool converged = true;
+    Particle next_mus[k];
+    int common_cluster = -1;
+    int most_counts = -1;
+    for (int i = 0; i < k; i++)
+    {
+      Particle next_p;
+      float new_mean_x = new_mu_x[i]/counts[i];
+      float new_mean_y = new_mu_y[i]/counts[i];
+      next_p.loc.x() = new_mean_x;
+      next_p.loc.y() = new_mean_y;
+      next_mus[k] = next_p;
+      if ((next_mus[i].loc - mus[i].loc).norm() > 0.01)
+          converged = false;
+        
+      if (most_counts < counts[i])
+      {
+        common_cluster = i;
+        most_counts = counts[i];
+      }
+    }
+
+    if (converged)
+      return next_mus[common_cluster];
+  }
+  return mus[0];
+}
+
+
 }  // namespace particle_filter

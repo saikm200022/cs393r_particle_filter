@@ -39,6 +39,13 @@ struct Particle {
   double weight;
 
   public:
+    Particle() {
+      loc = Eigen::Vector2f(0, 0);
+      angle = 0.0;
+      weight = 0.0;
+    }
+
+
     Particle(float x, float y, float theta, double init_weight) {
       loc = Eigen::Vector2f(x,y);
       angle = theta;
@@ -100,6 +107,8 @@ class ParticleFilter {
                               float angle_min,
                               float angle_max,
                               std::vector<Eigen::Vector2f>* scan);
+  
+  Particle KMeansClustering(int k);
 
   vector_map::VectorMap map_;
 
