@@ -140,7 +140,7 @@ void PublishPredictedScan() {
   for (const Vector2f& p : predicted_scan) {
     // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
     DrawPoint(p, kColor, vis_msg_);
-    
+
   }
 }
 

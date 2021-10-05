@@ -34,6 +34,7 @@
 
 #include "config_reader/config_reader.h"
 #include "particle_filter.h"
+#include <stdexcept>
 
 #include "vector_map/vector_map.h"
 
@@ -46,6 +47,7 @@ using std::vector;
 using Eigen::Vector2f;
 using Eigen::Vector2i;
 using vector_map::VectorMap;
+
 
 DEFINE_double(num_particles, 50, "Number of particles");
 const float kEpsilon = 1e-5;
@@ -469,30 +471,18 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // // Compute the best estimate of the robot's location based on the current set
   // // of particles. The computed values must be set to the `loc` and `angle`
   // // variables to return them. Modify the following assignments:
-  std::map<float, int> xcoords;
-  std::map<float, int> ycoords;
   if (particles_.size() > 0) {
     double x_sum = 0;
     double y_sum = 0;
-    double theta_sum = 0;
-    double weight_sum = 0;
+    // double theta_sum = 0;
+    // double weight_sum = 0;
     double cos_sum = 0.0;
     double sin_sum = 0.0;
     for (auto particle : particles_) {
-      if (xcoords.count(particle.loc.x()))
-        xcoords[particle.loc.x()] = xcoords[particle.loc.x()] + 1;
-      else
-        xcoords[particle.loc.x()] = 1;
-      
-      if (ycoords.count(particle.loc.y()))
-        ycoords[particle.loc.y()] = ycoords[particle.loc.y()] + 1;
-      else
-        ycoords[particle.loc.y()] = 1;
-
       x_sum += particle.loc.x();
       y_sum += particle.loc.y();
-      theta_sum += particle.angle;
-      weight_sum += particle.weight;
+      // theta_sum += particle.angle;
+      // weight_sum += particle.weight;
       cos_sum += cos(particle.angle);
       sin_sum += sin(particle.angle);
     }
@@ -503,25 +493,12 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     //   y_sum += particle.loc.y() * w;
     //   theta_sum += particle.angle * w;
     // }
-
     double size = (double)particles_.size();
-    loc = Vector2f(x_sum / size, y_sum / size);
+    Particle location = KMeansClustering(3, x_sum/size, y_sum/size);
+    loc = location.loc;
+    printf("Estimated Location: %f %f\n", loc[0], loc[1]);
+    // throw std::invalid_argument( "received negative value" );
     angle = atan2(sin_sum / size,cos_sum / size);
-    
-    // float most_freq_x = 0.0;
-    // int max_count = -1;
-    // for(auto it = xcoords.cbegin(); it != xcoords.cend(); ++it)
-    // {
-    //   if (it->second > max_count)
-    //   {
-    //     most_freq_x = it->first;
-    //     max_count = it->second;
-    //   }
-    // }
-    // loc[0] = most_freq_x;
-
-    // printf("FREQS: %f COUNT: %d", most_freq_x, max_count);
-
   } else {
     loc = Vector2f(0, 0);
     angle = 0;
@@ -529,30 +506,39 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
 }
 
 
-Particle ParticleFilter::KMeansClustering(int k)
+Particle ParticleFilter::KMeansClustering(int k, float x_init, float y_init) const
 {
   Particle mus[k];
   for (int i = 0; i < k; i++)
   {
     Particle p;
-    p.loc[0] = rand() % 200 - 100;
-    p.loc[1] = rand() % 200 - 100;
-
+    p.loc[0] = rand() % k + x_init;
+    p.loc[1] = rand() % k + y_init;
+    printf("MUS Location: %f %f\n", p.loc[0], p.loc[1]);
     mus[i] = p;
   }
   
   while (true)
   {
+    printf("K_MEANS\n");
     float new_mu_x[k];
     float new_mu_y[k];
-    int counts[k];
+    float counts[k];
+    for (int i = 0; i < k; i++)
+    {
+      new_mu_x[i] = 0.0;
+      new_mu_y[i] = 0.0;
+      counts[i] = 0.0;
+    }
+
     for (auto p : particles_)
     {
       float closest_mean = 10000000000;
       int label = 0;
       for (int i = 0; i < k; i++)
       {
-          float distance = (p.loc - mus[k].loc).norm();
+          float distance = pow((p.loc - mus[i].loc).norm(), 0.5);
+          // printf("POS: %f %f\n", p.loc[0], p.loc[1]);
           if (distance < closest_mean)
           {
             closest_mean = distance;
@@ -562,13 +548,17 @@ Particle ParticleFilter::KMeansClustering(int k)
 
       new_mu_x[label] += p.loc.x();
       new_mu_y[label] += p.loc.y();
-      counts[label] += 1;
+      counts[label] += 1.0;
     }
+
+    printf("NEW MU 0: %f %f %f\n", new_mu_x[0], new_mu_y[0], counts[0]);
+    printf("NEW MU 1: %f %f %f \n", new_mu_x[1], new_mu_y[1], counts[1]);
+    printf("NEW MU 2: %f %f %f\n", new_mu_x[2], new_mu_y[2], counts[2]);
 
     bool converged = true;
     Particle next_mus[k];
-    int common_cluster = -1;
-    int most_counts = -1;
+    int common_cluster = -1.0;
+    float most_counts = -1.0;
     for (int i = 0; i < k; i++)
     {
       Particle next_p;
@@ -576,8 +566,9 @@ Particle ParticleFilter::KMeansClustering(int k)
       float new_mean_y = new_mu_y[i]/counts[i];
       next_p.loc.x() = new_mean_x;
       next_p.loc.y() = new_mean_y;
-      next_mus[k] = next_p;
-      if ((next_mus[i].loc - mus[i].loc).norm() > 0.01)
+      next_mus[i] = next_p;
+      // printf("DIFF: %f\n",pow((next_mus[i].loc - mus[i].loc).norm(), 0.5));
+      if (abs(pow((next_mus[i].loc - mus[i].loc).norm(), 0.5)) > 0.01)
           converged = false;
         
       if (most_counts < counts[i])
@@ -585,8 +576,10 @@ Particle ParticleFilter::KMeansClustering(int k)
         common_cluster = i;
         most_counts = counts[i];
       }
+      mus[i] = next_mus[i];
     }
 
+    printf("BEST CLUSTER: %f %f\n*****************\n", next_mus[common_cluster].loc[0], next_mus[common_cluster].loc[1]);
     if (converged)
       return next_mus[common_cluster];
   }

@@ -108,7 +108,7 @@ class ParticleFilter {
                               float angle_max,
                               std::vector<Eigen::Vector2f>* scan);
   
-  Particle KMeansClustering(int k);
+  Particle KMeansClustering(int k, float x_init, float y_init) const;
 
   vector_map::VectorMap map_;
 
