@@ -310,7 +310,7 @@ void ParticleFilter::Resample() {
   if (particles_.size() < 1)
     return;
 
-  // printf("Resampling\n");
+  printf("Resampling\n");
   vector<Particle> new_particles;
 
   vector<float> bins;
@@ -383,15 +383,15 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
 
     num_updates -= 1;
 
-    distance_travelled = .15;
-    angle_travelled = .175;
+    distance_travelled = distance_travelled_og;
+    angle_travelled = angle_travelled_og;
   }
 
   if (num_updates <= 0)
   {
     printf("\nRESAMPLE\n");
     Resample();
-    num_updates = 25;
+    num_updates = num_updates_og;
   }
 
 }

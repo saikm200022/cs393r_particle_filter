@@ -111,10 +111,17 @@ void PublishParticles() {
   particle_filter_.GetLocation(&robot_loc, &robot_angle);
   for (const particle_filter::Particle& p : particles) {
     uint32_t kColor = 0;
-    uint32_t scaledColor = (uint32_t) (((float) 0xFF) * (1 - p.weight));
+    uint32_t scaledColor = (uint32_t) (int) (((float) 0x0FF) * (1 - p.weight));
+    if (scaledColor > 0xFF) {
+      scaledColor = 0xFF;
+    }
     kColor = scaledColor + (scaledColor << 8) + (scaledColor << 16);
-    printf("PARTICLE WEIGHT: %f %x\n", p.weight, kColor);
-    DrawLine(p.loc, robot_loc, kColor, vis_msg_);
+    
+    // kColor = 0;
+    // if (p.weight > (float) (1/ (float) particles.size())) {
+      // printf("good %f %x\n", p.weight, kColor);
+    // }
+    DrawLine(p.loc, Vector2f(0,0), kColor, vis_msg_);
     // if (true)
     // {
     //   float ang = 0.0;
@@ -140,6 +147,7 @@ void PublishParticles() {
     DrawParticle(p.loc, p.angle, vis_msg_);
     s+= p.weight;
   }
+  printf("\n");
 }
 
 void PublishPredictedScan() {

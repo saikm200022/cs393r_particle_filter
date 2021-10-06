@@ -127,7 +127,7 @@ class ParticleFilter {
   float prev_odom_angle_;
   bool odom_initialized_;
 
-  const int num_initial_particles = 10;
+  const int num_initial_particles = 100;
 
   const double initial_std_x = 0.2;
   const double initial_std_y = 0.2;
@@ -139,12 +139,12 @@ class ParticleFilter {
 
   // Standard deviation of the sensor
   // Seems pretty small?
-  double update_variance = 0.15;
+  double update_variance = 0.5;
 
   // Account for correlation between rays on update step
   // 1    -> no correlation
   // 1/n  -> perfect correlation (n = number of rays)
-  double gamma = 1.0 / 1000.0;
+  double gamma = 1 / 1000.0;
 
   int visualize_particle_filter = 1;
 
@@ -159,12 +159,15 @@ class ParticleFilter {
   Eigen::Vector2f prev_odom_loc = Eigen::Vector2f(-1000, -1000);
   float prev_odom_angle = 0;
 
-  float distance_travelled = .15;
-  float angle_travelled = .175;
+  float distance_travelled_og = .15; //.15 according to professor
+  float distance_travelled = distance_travelled_og;
+  float angle_travelled_og = .175; //.175 according to professor
+  float angle_travelled = angle_travelled_og;
 
   int laser_point_trim = 100;
 
-  int num_updates = 100;
+  int num_updates_og = 25;
+  int num_updates = num_updates_og;
 
   Eigen::Vector2f d_short = Eigen::Vector2f(10, 2);
   Eigen::Vector2f d_long = Eigen::Vector2f(10, 2);
