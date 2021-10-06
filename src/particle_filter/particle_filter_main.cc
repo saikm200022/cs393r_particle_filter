@@ -65,6 +65,7 @@ using visualization::DrawPoint;
 using visualization::DrawLine;
 using visualization::DrawParticle;
 using visualization::DrawCross;
+using visualization::DrawLine;
 
 // Create command line arguements
 DEFINE_string(laser_topic, "/scan", "Name of ROS topic for LIDAR data");
@@ -104,18 +105,37 @@ void PublishParticles() {
   vector<particle_filter::Particle> particles;
   particle_filter_.GetParticles(&particles);
   float s = 0;
+  
+  Vector2f robot_loc(0, 0);
+  float robot_angle(0);
+  particle_filter_.GetLocation(&robot_loc, &robot_angle);
   for (const particle_filter::Particle& p : particles) {
-    // printf("PARTICLE WEIGHT: %f\n", p.weight);
-    if (p.weight < 0.016)
-      DrawPoint(p.loc, 0xf5c242 ,  vis_msg_);
-    if (p.weight < 0.02)
-      DrawPoint(p.loc, 0x000000 ,  vis_msg_);
-    else if (p.weight < 0.025)
-      DrawPoint(p.loc, 0x00 , vis_msg_);
-
-    else
-      DrawPoint(p.loc, 0xef42f5, vis_msg_);
-
+    uint32_t kColor = 0;
+    uint32_t scaledColor = (uint32_t) (((float) 0xFF) * (1 - p.weight));
+    kColor = scaledColor + (scaledColor << 8) + (scaledColor << 16);
+    printf("PARTICLE WEIGHT: %f %x\n", p.weight, kColor);
+    DrawLine(p.loc, robot_loc, kColor, vis_msg_);
+    // if (true)
+    // {
+    //   float ang = 0.0;
+    //   particle_filter::Particle temp;
+    //   temp.loc = p.loc;
+    //   for (ang = 0.0; ang <= 2 * M_PI; ang += M_PI/2.0)
+    //   {
+    //     printf("ANG: %f\n", ang);
+    //     temp.angle = ang;
+    //     particle_filter_.Update(last_laser_msg_.ranges,
+    //                             last_laser_msg_.range_min,
+    //                             last_laser_msg_.range_max,
+    //                             last_laser_msg_.angle_min,
+    //                             last_laser_msg_.angle_max,
+    //                             &temp);
+    //     printf("TEMP: %f\n", exp(temp.weight) * 10.0);
+    //     Vector2f weight_dist = Vector2f((temp.loc.x() * exp(temp.weight) * 100.0) * cos(ang), 
+    //                                     (temp.loc.y() * exp(temp.weight) * 100.0) * sin(ang));
+    //     DrawLine(p.loc, weight_dist, 0xA269E0, vis_msg_);
+    //   }
+    // }
 
     DrawParticle(p.loc, p.angle, vis_msg_);
     s+= p.weight;

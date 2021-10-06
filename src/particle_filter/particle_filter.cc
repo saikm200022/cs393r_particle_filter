@@ -231,7 +231,7 @@ void ParticleFilter::NormalizeWeights() {
   // Find Max Weight
   double max = particles_[0].weight;
   for (auto p : particles_) {
-    if (p.weight < max && !fEquals(p.weight, 0.0))
+    if (p.weight > max && !fEquals(p.weight, 0.0))
       max = p.weight;
   }
 
@@ -240,12 +240,12 @@ void ParticleFilter::NormalizeWeights() {
   if (fEquals(max, 0.0)) {
     reduce = abs(1.0 / 500.0);
   } else {
-    reduce = abs(1.0 / max);
+    reduce = max;
   }
 
   // scale every weight
   for (auto& p : particles_) {
-    p.weight *= reduce;
+    p.weight -= reduce;
   }
 
   for (auto p : particles_) {
@@ -253,11 +253,13 @@ void ParticleFilter::NormalizeWeights() {
   }
 
   if (!fEquals(weight_sum, 0.0)) {
+    float s = 0.0;
     for (auto& p : particles_) {
       // printf("Old weight: %lf\n", p.weight);
 
       p.weight = exp(p.weight) / weight_sum;
-      // printf("NORMALIZE WEIGHTS AF: %f\n", p.weight);
+      s += p.weight;
+      
       // printf("New weight: %lf\n\n", p.weight);
     }
   } else {
@@ -324,8 +326,8 @@ void ParticleFilter::Resample() {
     printf("%d\n", total_time);
   for (unsigned i = 0; i < particles_.size(); i++) {
     // printf("Sample: %f\n", sample);
-    if (total_time < 100)
-      sample = rng_.UniformRandom(0, 1);
+    // if (total_time < 1)
+    //   sample = rng_.UniformRandom(0, 1);
     int bin_index = SearchBins(bins, sample);
     if (bin_index == -1) {
       bin_index = (int)(sample * (float)bins.size());
@@ -372,6 +374,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   num_scans_predicted = ranges.size();
   total_time += 1;
   if (distance_travelled < 0 || angle_travelled < 0) {
+    printf("UPDATE\n");
     // // Update the weights of the particles
     for (auto& p_ptr : particles_) {
       Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
@@ -386,8 +389,9 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
 
   if (num_updates <= 0)
   {
+    printf("\nRESAMPLE\n");
     Resample();
-    num_updates = 5;
+    num_updates = 25;
   }
 
 }
@@ -433,7 +437,7 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
       // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
       float next_x = rng_.Gaussian(T_map[0], k * 0.1 * abs(translation[0]));
       float next_y = rng_.Gaussian(T_map[1], k * 0.1 * abs(translation[1]));
-      float next_theta = rng_.Gaussian(theta_map, k * 0.1 *  abs(delta_theta_bl));
+      float next_theta = rng_.Gaussian(theta_map, k * 0.01 *  abs(delta_theta_bl));
       particles_[i].loc[0] = next_x;
       particles_[i].loc[1] = next_y;
       particles_[i].angle = next_theta;
@@ -488,12 +492,12 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     }
 
     double size = (double)particles_.size();
-    if (total_time % 1 == 0)
+    if (total_time % 200 == 0)
     {
-      Particle location = KMeansClustering(2, x_sum/size, y_sum/size);
+      Particle location = KMeansClustering(3, x_sum/size, y_sum/size);
       loc = location.loc;
     }
-
+    else
       loc = Vector2f(x_sum/size, y_sum/size);
 
     // printf("Estimated Location: %f %f\n", loc[0], loc[1]);
@@ -514,13 +518,13 @@ Particle ParticleFilter::KMeansClustering(int k, float x_init, float y_init) con
     Particle p;
     p.loc[0] = rand() % k / 2 + x_init +  rand() %  -k / 2 ;
     p.loc[1] = rand() % k / 2  + y_init +  rand() %  -k / 2;
-    printf("MUS Location: %f %f\n", p.loc[0], p.loc[1]);
+    // printf("MUS Location: %f %f\n", p.loc[0], p.loc[1]);
     mus[i] = p;
   }
   
   while (true)
   {
-    printf("K_MEANS\n");
+    // printf("K_MEANS\n");
     float new_mu_x[k];
     float new_mu_y[k];
     float counts[k];
@@ -551,9 +555,9 @@ Particle ParticleFilter::KMeansClustering(int k, float x_init, float y_init) con
       counts[label] += 1.0;
     }
 
-    printf("NEW MU 0: %f %f %f\n", new_mu_x[0], new_mu_y[0], counts[0]);
-    printf("NEW MU 1: %f %f %f \n", new_mu_x[1], new_mu_y[1], counts[1]);
-    printf("NEW MU 2: %f %f %f\n", new_mu_x[2], new_mu_y[2], counts[2]);
+    // printf("NEW MU 0: %f %f %f\n", new_mu_x[0], new_mu_y[0], counts[0]);
+    // printf("NEW MU 1: %f %f %f \n", new_mu_x[1], new_mu_y[1], counts[1]);
+    // printf("NEW MU 2: %f %f %f\n", new_mu_x[2], new_mu_y[2], counts[2]);
 
     bool converged = true;
     Particle next_mus[k];
@@ -579,7 +583,7 @@ Particle ParticleFilter::KMeansClustering(int k, float x_init, float y_init) con
       mus[i] = next_mus[i];
     }
 
-    printf("BEST CLUSTER: %f %f\n*****************\n", next_mus[common_cluster].loc[0], next_mus[common_cluster].loc[1]);
+    // printf("BEST CLUSTER: %f %f\n*****************\n", next_mus[common_cluster].loc[0], next_mus[common_cluster].loc[1]);
     if (converged)
       return next_mus[common_cluster];
   }

@@ -127,7 +127,7 @@ class ParticleFilter {
   float prev_odom_angle_;
   bool odom_initialized_;
 
-  const int num_initial_particles = 50;
+  const int num_initial_particles = 10;
 
   const double initial_std_x = 0.2;
   const double initial_std_y = 0.2;
@@ -144,11 +144,11 @@ class ParticleFilter {
   // Account for correlation between rays on update step
   // 1    -> no correlation
   // 1/n  -> perfect correlation (n = number of rays)
-  double gamma = 1.0 / 700.0;
+  double gamma = 1.0 / 1000.0;
 
   int visualize_particle_filter = 1;
 
-  const float k = 0.1;
+  const float k = 1;
   const float odom_var_x = 0.1;
   const float odom_var_y = 0.1;
   const float odom_var_t = 0.1;
@@ -164,7 +164,7 @@ class ParticleFilter {
 
   int laser_point_trim = 100;
 
-  int num_updates = 5;
+  int num_updates = 100;
 
   Eigen::Vector2f d_short = Eigen::Vector2f(10, 2);
   Eigen::Vector2f d_long = Eigen::Vector2f(10, 2);
