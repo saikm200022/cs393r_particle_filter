@@ -129,37 +129,35 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
     Vector2f robot_point = LaserScanToPoint(theta, range_max);
     Vector2f global_point = RobotToGlobal(robot_point, loc, angle);
 
-    // compare with lines on map
+    // compare ray with each line on map
     // Optimize this with AABB if time permits
-    // printf("Length of map file: %lud\n", map_.lines.size());
     for (size_t j = 0; j < map_.lines.size(); ++j) {
       const line2f map_line = map_.lines[j];
-      // printf("Map line: %f %f   %f %f\n", map_line.p0.x(), map_line.p0.y(), map_line.p1.x(), map_line.p1.y());
       
+      // Create the scan line - from robot location to the end of the scanner ray aka point of point cloud
       line2f scan_line(loc.x(), loc.y(), global_point.x(), global_point.y());
 
-      bool intersects = map_line.Intersects(scan_line);
-
+      // Intersect them
       Vector2f intersection_point;
-      intersects = map_line.Intersection(scan_line, &intersection_point);
+      bool intersects = map_line.Intersection(scan_line, &intersection_point);
 
+      // If there is an intersection - then this scanner ray hits a wall
       if (intersects) {
-        // printf("Intersection found\n");
+        // Make a new line that goes from robot to new intersection (wall)
         line2f intersection_line(loc.x(), loc.y(), intersection_point.x(), intersection_point.y());
-        // Find the closest intersection that is outside the min range
-        if (intersection_line.Length() < scan_line.Length() && intersection_point.norm() > range_min) {
-          // printf("**************Intersection found\n");
+
+        // Make sure the intersection is actually shorter than the current line but longer than min range
+        if (intersection_line.Length() < scan_line.Length() && intersection_line.Length() > range_min) {
+          // Update the point to be this wall
           global_point = intersection_point;
-          scan_line = line2f(loc.x(), loc.y(), global_point.x(), global_point.y());
         }
       }
     }
 
-    // scan[i] = robot_point;
+    // After we have compared against all of the walls, change it back to robot frame and set scan
     scan[i] = GlobalToRobot(global_point, loc, angle);
-    // printf("Robot point original norm: %lf\n", robot_point.norm());
-    // printf("Robot point final norm:    %lf\n", scan[i].norm());
 
+    // go to next point
     theta += laser_point_trim*angle_delta;
   }
 }
@@ -182,44 +180,44 @@ void ParticleFilter::Update(const vector<float>& ranges,
   vector<Vector2f> predicted_scan;
   GetPredictedPointCloud(p.loc, p.angle, num_scans_predicted, range_min, range_max, angle_min, angle_max, &predicted_scan);
   
-  double likelihood = 1.0;
-
+  // Calculating the log likelihood
   double log_likelihood = 0;
 
+  // Angle delta
   float angle_delta = (angle_max - angle_min) / ranges.size();
   float angle = angle_min;
 
-  // Calculate for each point in point cloud
+  // Calculate difference from expect point cloud for each point in real point cloud
   for (unsigned index = 0; index < ranges.size(); index+=laser_point_trim) {
     float true_range = ranges[index];
 
+    // If there's some error in the reading, skip it
     if (true_range > range_max || true_range < range_min) 
       continue;
 
+    // Get the actual vs predicted point for this scan value
     Vector2f true_point = LaserScanToPoint(angle, true_range);
     Vector2f predicted_point = predicted_scan[index];
 
+    // s_i - s_hat_i
     Eigen::Vector2f difference = true_point - predicted_point;
 
-    if (difference[0] < -d_short[0] || difference[1] < -d_short[1])
-    {
-      log_likelihood += pow(d_short.norm(), 2) / pow(update_variance, 2);
-    }
-    else if (difference[0] > d_long[0] || difference[1] > d_long[1])
-    {
-      log_likelihood += pow(d_long.norm(), 2) / pow(update_variance, 2);
-    }
-    else
-    {
-      // printf("other \n");
-      log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
-    }
+    // Robust observation likelihood - trim difference if it's too big or small
+    difference[0] = std::max(difference[0], -d_short[0]);
+    difference[1] = std::max(difference[1], -d_short[1]); 
+
+    difference[0] = std::min(difference[0], d_long[0]); 
+    difference[1] = std::min(difference[1], d_long[1]); 
+
+    // 
+    log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
     
-    double term = pow(exp(pow(true_point.norm() - predicted_point.norm(),2) / (pow(update_variance,2) * -2)), gamma);
-    likelihood *= term;
+    // Move to the next laser point
     angle += laser_point_trim*angle_delta;
   }
-  p_ptr->weight = -gamma * log_likelihood;
+
+  // overall weight is the -gamma * sum of log likelihoods
+  p_ptr->weight *= -gamma * log_likelihood;
 }
 
 void ParticleFilter::NormalizeWeights() {
@@ -233,6 +231,8 @@ void ParticleFilter::NormalizeWeights() {
   for (auto p : particles_) {
     if (p.weight > max && !fEquals(p.weight, 0.0))
       max = p.weight;
+          // printf("New weight: %lf\n",p.weight);
+
   }
 
   // Get reduction factor
@@ -260,7 +260,6 @@ void ParticleFilter::NormalizeWeights() {
       p.weight = exp(p.weight) / weight_sum;
       s += p.weight;
       
-      // printf("New weight: %lf\n\n", p.weight);
     }
   } else {
     for (auto& p : particles_) {
@@ -325,6 +324,12 @@ void ParticleFilter::Resample() {
     float sample = rng_.UniformRandom(0, 1);
     printf("%d\n", total_time);
   for (unsigned i = 0; i < particles_.size(); i++) {
+    // if (particles_[i].weight >= 0.010)
+    // {
+    //     new_particles.push_back(particles_[i]);
+    //     continue;
+    // }
+
     // printf("Sample: %f\n", sample);
     // if (total_time < 1)
     //   sample = rng_.UniformRandom(0, 1);
@@ -374,7 +379,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   num_scans_predicted = ranges.size();
   total_time += 1;
   if (distance_travelled < 0 || angle_travelled < 0) {
-    printf("UPDATE\n");
+    // printf("UPDATE\n");
     // // Update the weights of the particles
     for (auto& p_ptr : particles_) {
       Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
@@ -386,6 +391,11 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     distance_travelled = distance_travelled_og;
     angle_travelled = angle_travelled_og;
   }
+  else{
+    for (auto& p : particles_) {
+      p.weight = 1.0 / (float)particles_.size();
+    }
+  }
 
   if (num_updates <= 0)
   {
@@ -393,7 +403,6 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     Resample();
     num_updates = num_updates_og;
   }
-
 }
 
 void ParticleFilter::Predict(const Vector2f& odom_loc,
@@ -492,7 +501,7 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     }
 
     double size = (double)particles_.size();
-    if (total_time % 200 == 0)
+    if (total_time % 1000000000 == 0)
     {
       Particle location = KMeansClustering(3, x_sum/size, y_sum/size);
       loc = location.loc;

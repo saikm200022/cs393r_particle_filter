@@ -122,32 +122,32 @@ void PublishParticles() {
       // printf("good %f %x\n", p.weight, kColor);
     // }
     DrawLine(p.loc, Vector2f(0,0), kColor, vis_msg_);
-    // if (true)
-    // {
-    //   float ang = 0.0;
-    //   particle_filter::Particle temp;
-    //   temp.loc = p.loc;
-    //   for (ang = 0.0; ang <= 2 * M_PI; ang += M_PI/2.0)
-    //   {
-    //     printf("ANG: %f\n", ang);
-    //     temp.angle = ang;
-    //     particle_filter_.Update(last_laser_msg_.ranges,
-    //                             last_laser_msg_.range_min,
-    //                             last_laser_msg_.range_max,
-    //                             last_laser_msg_.angle_min,
-    //                             last_laser_msg_.angle_max,
-    //                             &temp);
-    //     printf("TEMP: %f\n", exp(temp.weight) * 10.0);
-    //     Vector2f weight_dist = Vector2f((temp.loc.x() * exp(temp.weight) * 100.0) * cos(ang), 
-    //                                     (temp.loc.y() * exp(temp.weight) * 100.0) * sin(ang));
-    //     DrawLine(p.loc, weight_dist, 0xA269E0, vis_msg_);
-    //   }
-    // }
+    if (false)
+    {
+      float ang = 0.0;
+      particle_filter::Particle temp;
+      temp.loc = p.loc;
+      for (ang = 0.0; ang <= 2 * M_PI; ang += M_PI/25.0)
+      {
+        // printf("ANG: %f\n", ang);
+        temp.angle = ang;
+        particle_filter_.Update(last_laser_msg_.ranges,
+                                last_laser_msg_.range_min,
+                                last_laser_msg_.range_max,
+                                last_laser_msg_.angle_min,
+                                last_laser_msg_.angle_max,
+                                &temp);
+        // printf("TEMP: %f\n", exp(temp.weight) * 10.0);
+        Vector2f weight_dist = Vector2f(temp.loc.x() + (exp(temp.weight) * 100.0) * cos(ang), 
+                                        temp.loc.y() + (exp(temp.weight) * 100.0) * sin(ang));
+        DrawLine(p.loc, weight_dist, 0xA269E0, vis_msg_);
+      }
+    }
 
     DrawParticle(p.loc, p.angle, vis_msg_);
     s+= p.weight;
   }
-  printf("\n");
+  // printf("\n");
 }
 
 void PublishPredictedScan() {

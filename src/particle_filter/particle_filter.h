@@ -139,16 +139,16 @@ class ParticleFilter {
 
   // Standard deviation of the sensor
   // Seems pretty small?
-  double update_variance = 0.5;
+  double update_variance = 0.15;
 
   // Account for correlation between rays on update step
   // 1    -> no correlation
   // 1/n  -> perfect correlation (n = number of rays)
-  double gamma = 1 / 1000.0;
+  double gamma = 100 / 1000.0;
 
   int visualize_particle_filter = 1;
 
-  const float k = 1;
+  const float k = 5;
   const float odom_var_x = 0.1;
   const float odom_var_y = 0.1;
   const float odom_var_t = 0.1;
@@ -164,13 +164,14 @@ class ParticleFilter {
   float angle_travelled_og = .175; //.175 according to professor
   float angle_travelled = angle_travelled_og;
 
-  int laser_point_trim = 100;
+  // maybe 50
+  int laser_point_trim = 10;
 
-  int num_updates_og = 25;
+  int num_updates_og = 1000;
   int num_updates = num_updates_og;
 
-  Eigen::Vector2f d_short = Eigen::Vector2f(10, 2);
-  Eigen::Vector2f d_long = Eigen::Vector2f(10, 2);
+  Eigen::Vector2f d_short = Eigen::Vector2f(10.0, 10.0);
+  Eigen::Vector2f d_long = Eigen::Vector2f(10.0, 10.0);
   int total_time = 0;
 };
 }  // namespace slam
