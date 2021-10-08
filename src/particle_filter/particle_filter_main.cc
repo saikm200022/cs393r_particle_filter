@@ -121,7 +121,7 @@ void PublishParticles() {
     // if (p.weight > (float) (1/ (float) particles.size())) {
       // printf("good %f %x\n", p.weight, kColor);
     // }
-    DrawLine(p.loc, Vector2f(0,0), kColor, vis_msg_);
+    DrawLine(p.loc, robot_loc, kColor, vis_msg_);
     // if (true)
     // {
     //   float ang = 0.0;
@@ -147,7 +147,7 @@ void PublishParticles() {
     DrawParticle(p.loc, p.angle, vis_msg_);
     s+= p.weight;
   }
-  printf("\n");
+  // printf("\n");
 }
 
 void PublishPredictedScan() {
@@ -165,10 +165,14 @@ void PublishPredictedScan() {
       last_laser_msg_.angle_min,
       last_laser_msg_.angle_max,
       &predicted_scan);
-  for (const Vector2f& p : predicted_scan) {
-    // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
-    DrawPoint(p, kColor, vis_msg_);
+  // for (const Vector2f& p : predicted_scan) {
+  //   // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
+  //   DrawPoint(p, kColor, vis_msg_);
 
+  // }
+
+  for (unsigned i = 0; i < predicted_scan.size(); i+=particle_filter_.laser_point_trim) {
+    DrawPoint(predicted_scan[i], kColor, vis_msg_);
   }
 }
 
