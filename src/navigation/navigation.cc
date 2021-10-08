@@ -255,7 +255,7 @@ void Navigation::Run() {
     }
 
     drive_msg_.curvature = previous_curvature;
-    drive_msg_.velocity = previous_velocity;
+    drive_msg_.velocity = 0.0;
 
   // for (auto point : point_cloud_) {
   //   visualization::DrawPoint(point,0x4287f5,local_viz_msg_);

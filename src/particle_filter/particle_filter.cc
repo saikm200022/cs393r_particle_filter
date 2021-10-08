@@ -209,7 +209,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
     difference[0] = std::min(difference[0], d_long[0]); 
     difference[1] = std::min(difference[1], d_long[1]); 
 
-    // 
+    /***** Re-look Math ****/
     log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
     
     // Move to the next laser point
@@ -238,6 +238,7 @@ void ParticleFilter::NormalizeWeights() {
   // Get reduction factor
   double reduce = 1.0;
   if (fEquals(max, 0.0)) {
+    printf("This should never be run. Manually setting reduce??");
     reduce = abs(1.0 / 500.0);
   } else {
     reduce = max;
@@ -262,6 +263,7 @@ void ParticleFilter::NormalizeWeights() {
       
     }
   } else {
+    printf("This should never be run. Manually setting weights to 1/n");
     for (auto& p : particles_) {
       p.weight = 1.0 / (float)particles_.size();
     }
@@ -378,8 +380,8 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
 
   num_scans_predicted = ranges.size();
   total_time += 1;
-  if (distance_travelled < 0 || angle_travelled < 0) {
-    // printf("UPDATE\n");
+  if (true) {
+    printf("UPDATE\n");
     // // Update the weights of the particles
     for (auto& p_ptr : particles_) {
       Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
@@ -390,11 +392,6 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
 
     distance_travelled = distance_travelled_og;
     angle_travelled = angle_travelled_og;
-  }
-  else{
-    for (auto& p : particles_) {
-      p.weight = 1.0 / (float)particles_.size();
-    }
   }
 
   if (num_updates <= 0)

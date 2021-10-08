@@ -122,6 +122,8 @@ void PublishParticles() {
       // printf("good %f %x\n", p.weight, kColor);
     // }
     DrawLine(p.loc, Vector2f(0,0), kColor, vis_msg_);
+    // printf("NORMALIZED WEIGHTS: %f\n", p.weight);
+
     if (false)
     {
       float ang = 0.0;
@@ -244,19 +246,19 @@ void PublishVisualization() {
 }
 
 void LaserCallback(const sensor_msgs::LaserScan& msg) {
-  if (FLAGS_v > 0) {
-    printf("Laser t=%f\n", msg.header.stamp.toSec());
-  }
-  last_laser_msg_ = msg;
-  particle_filter_.ObserveLaser(
-      msg.ranges,
-      msg.range_min,
-      msg.range_max,
-      msg.angle_min,
-      msg.angle_max);
+    if (FLAGS_v > 0) {
+      printf("Laser t=%f\n", msg.header.stamp.toSec());
+    }
+    last_laser_msg_ = msg;
+    particle_filter_.ObserveLaser(
+        msg.ranges,
+        msg.range_min,
+        msg.range_max,
+        msg.angle_min,
+        msg.angle_max);
 
-  
-  PublishVisualization();
+    
+    PublishVisualization();
 }
 
 void OdometryCallback(const nav_msgs::Odometry& msg) {
