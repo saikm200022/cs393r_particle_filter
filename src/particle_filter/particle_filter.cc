@@ -182,6 +182,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
   
   // Calculating the log likelihood
   double log_likelihood = 0;
+  std::vector<double> differences;
 
   // Angle delta
   float angle_delta = (angle_max - angle_min) / ranges.size();
@@ -203,21 +204,32 @@ void ParticleFilter::Update(const vector<float>& ranges,
     Eigen::Vector2f difference = true_point - predicted_point;
 
     // Robust observation likelihood - trim difference if it's too big or small
-    difference[0] = std::max(difference[0], -d_short[0]);
-    difference[1] = std::max(difference[1], -d_short[1]); 
+    // difference[0] = std::max(difference[0], -d_short[0]);
+    // difference[1] = std::max(difference[1], -d_short[1]); 
 
-    difference[0] = std::min(difference[0], d_long[0]); 
-    difference[1] = std::min(difference[1], d_long[1]); 
+    // difference[0] = std::min(difference[0], d_long[0]); 
+    // difference[1] = std::min(difference[1], d_long[1]); 
+
+    differences.push_back(difference.norm());
 
     // 
-    log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
+    // log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
     
     // Move to the next laser point
     angle += laser_point_trim*angle_delta;
   }
 
+  std::sort(differences.begin(), differences.end());
+
+  int begin = differences.size() * 0.1;
+  int end   = differences.size() * 0.9;
+
+  for (int i = begin; i < end; i++) {
+    log_likelihood += pow(differences[i], 2) / pow(update_variance, 2);
+  }
+
   // overall weight is the -gamma * sum of log likelihoods
-  p_ptr->weight *= -gamma * log_likelihood;
+  p_ptr->weight = -gamma * log_likelihood;
 }
 
 void ParticleFilter::NormalizeWeights() {

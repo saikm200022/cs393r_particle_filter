@@ -135,7 +135,7 @@ class ParticleFilter {
   const double initial_std_y = 0.2;
   const double initial_std_theta = M_PI / 12;
 
-  const double laser_x_offset = 0.2;
+  const double laser_x_offset = 0.18;
 
   int num_scans_predicted;
 
