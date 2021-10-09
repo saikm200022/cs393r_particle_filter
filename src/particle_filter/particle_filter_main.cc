@@ -152,6 +152,19 @@ void PublishParticles() {
   // printf("\n");
 }
 
+void PublishDifferenceLines() {
+  if (!particle_filter_.draw_lines)
+    return;
+
+  const uint32_t kColor = 0x000000;
+  for (unsigned i = 0; i < particle_filter_.lines.size(); i+=2) {
+    DrawLine(particle_filter_.lines[i],
+             particle_filter_.lines[i+1],
+             kColor,
+             vis_msg_);
+  }
+}
+
 void PublishPredictedScan() {
   const uint32_t kColor = 0xA269E5;
   Vector2f robot_loc(0, 0);
@@ -167,10 +180,15 @@ void PublishPredictedScan() {
       last_laser_msg_.angle_min,
       last_laser_msg_.angle_max,
       &predicted_scan);
-  for (const Vector2f& p : predicted_scan) {
-    // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
-    DrawPoint(p, kColor, vis_msg_);
+  // for (const Vector2f& p : predicted_scan) {
+  //   // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
+  //   DrawPoint(p, kColor, vis_msg_);
 
+  // }
+
+  for (unsigned i = 0; i < predicted_scan.size(); i += particle_filter_.laser_point_trim) {
+    // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
+    DrawPoint(predicted_scan[i], kColor, vis_msg_);
   }
 }
 
@@ -211,6 +229,36 @@ void PublishTrajectory() {
   }
 }
 
+void PublishTestScan() {
+  if (!particle_filter_.initialized)
+    return;
+
+  const uint32_t kColor = 0x00FF00;
+  // Vector2f robot_loc(0, 0);
+  // float robot_angle(0);
+  // particle_filter_.GetLocation(&robot_loc, &robot_angle);
+  vector<Vector2f> predicted_scan;
+  particle_filter_.GetPredictedPointCloud(
+      particle_filter_.initial_loc_,
+      particle_filter_.initial_angle_,
+      last_laser_msg_.ranges.size(),
+      last_laser_msg_.range_min,
+      last_laser_msg_.range_max,
+      last_laser_msg_.angle_min,
+      last_laser_msg_.angle_max,
+      &predicted_scan);
+  // for (const Vector2f& p : predicted_scan) {
+  //   // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
+  //   DrawPoint(p, kColor, vis_msg_);
+
+  // }
+
+  for (unsigned i = 0; i < predicted_scan.size(); i += particle_filter_.laser_point_trim) {
+    // DrawPoint(particle_filter_.RobotToGlobal(p, robot_loc, robot_angle), kColor, vis_msg_);
+    DrawPoint(particle_filter_.RobotToGlobal(predicted_scan[i], particle_filter_.initial_loc_, particle_filter_.initial_angle_), kColor, vis_msg_);
+  }
+}
+
 void PublishRealScan() {
   // printf("Drawing real scan\n");
   const uint32_t kColor = 0xFF73D4;
@@ -241,6 +289,8 @@ void PublishVisualization() {
   PublishRealScan();
   PublishPredictedScan();
   PublishTrajectory();
+  PublishTestScan();
+  PublishDifferenceLines();
   // PublishMap();
   visualization_publisher_.publish(vis_msg_);
 }

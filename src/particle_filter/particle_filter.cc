@@ -79,7 +79,7 @@ Eigen::Vector2f ParticleFilter::LaserScanToPoint(float angle, float distance) {
 
 // translate from robot frame to global frame
 Eigen::Vector2f ParticleFilter::RobotToGlobal (Eigen::Vector2f point, const Vector2f& loc, const float angle) {
-  Eigen::Matrix2f rot = GetRotationMatrix(-angle);
+  Eigen::Matrix2f rot = GetRotationMatrix(angle);
 
   auto translated_point = (rot * point) + loc;
   return translated_point;
@@ -87,7 +87,7 @@ Eigen::Vector2f ParticleFilter::RobotToGlobal (Eigen::Vector2f point, const Vect
 
 // translate from global frame to robot frame
 Eigen::Vector2f ParticleFilter::GlobalToRobot (Eigen::Vector2f point, const Vector2f& loc, const float angle) {
-  Eigen::Matrix2f rot = GetRotationMatrix(angle);
+  Eigen::Matrix2f rot = GetRotationMatrix(-angle);
 
   auto translated_point = rot * (point - loc);
   return translated_point;
@@ -187,6 +187,10 @@ void ParticleFilter::Update(const vector<float>& ranges,
   float angle_delta = (angle_max - angle_min) / ranges.size();
   float angle = angle_min;
 
+  lines.clear();
+
+  std::vector<double> differences;
+
   // Calculate difference from expect point cloud for each point in real point cloud
   for (unsigned index = 0; index < ranges.size(); index+=laser_point_trim) {
     float true_range = ranges[index];
@@ -201,23 +205,41 @@ void ParticleFilter::Update(const vector<float>& ranges,
 
     // s_i - s_hat_i
     Eigen::Vector2f difference = true_point - predicted_point;
+    printf("Ray %d: %lf\n", index,  difference.norm());
+    printf("True point: \t%f %f\nPred point: \t%f %f\n\n", true_point[0], true_point[1], predicted_point[0], predicted_point[1]);
+    lines.emplace_back(true_point);
+    lines.emplace_back(predicted_point);
+    
 
     // Robust observation likelihood - trim difference if it's too big or small
-    difference[0] = std::max(difference[0], -d_short[0]);
-    difference[1] = std::max(difference[1], -d_short[1]); 
+    // difference[0] = std::max(difference[0], -d_short[0]);
+    // difference[1] = std::max(difference[1], -d_short[1]); 
 
-    difference[0] = std::min(difference[0], d_long[0]); 
-    difference[1] = std::min(difference[1], d_long[1]); 
+    // difference[0] = std::min(difference[0], d_long[0]); 
+    // difference[1] = std::min(difference[1], d_long[1]); 
+
+    differences.push_back(difference.norm());
 
     /***** Re-look Math ****/
-    log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
+    // log_likelihood += pow(difference.norm(), 2) / pow(update_variance, 2);
     
     // Move to the next laser point
     angle += laser_point_trim*angle_delta;
   }
 
+  std::sort(differences.begin(), differences.end());
+
+  int begin = differences.size() * 0.1;
+  int end   = differences.size() * 0.9;
+
+  for (int i = begin; i < end; i++) {
+    log_likelihood += pow(differences[i], 2) / pow(update_variance, 2);
+  }
+
+  draw_lines = 1;
+
   // overall weight is the -gamma * sum of log likelihoods
-  p_ptr->weight *= -gamma * log_likelihood;
+  p_ptr->weight = -gamma * log_likelihood;
 }
 
 void ParticleFilter::NormalizeWeights() {
@@ -238,8 +260,8 @@ void ParticleFilter::NormalizeWeights() {
   // Get reduction factor
   double reduce = 1.0;
   if (fEquals(max, 0.0)) {
-    printf("This should never be run. Manually setting reduce??");
-    reduce = abs(1.0 / 500.0);
+    // printf("This should never be run. Manually setting reduce??\n");
+    reduce = 0;
   } else {
     reduce = max;
   }
@@ -380,24 +402,45 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
 
   num_scans_predicted = ranges.size();
   total_time += 1;
-  if (true) {
-    printf("UPDATE\n");
+
+  if (!initialized)
+    return; 
+
+  if (do_update) {
+    // printf("UPDATE\n");
     // // Update the weights of the particles
-    for (auto& p_ptr : particles_) {
-      Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
-    }
-    NormalizeWeights();
+    // for (auto& p_ptr : particles_) {
+    //   Update(ranges, range_min, range_max, angle_min, angle_max, &p_ptr);
+    // }
+
+    Update(ranges, range_min, range_max, angle_min, angle_max, &particles_[0]);
+    printf("Particle 0: %lf\n", particles_[0].weight);
+    printf("\tDistance from location: %f\n", (particles_[0].loc - initial_loc_).norm());
+
+    // int index = 0;
+    // for (auto& p_ptr : particles_) {
+    //   printf("Particle %d: %lf\n", index++, p_ptr.weight);
+    //   printf("\tDistance from location: %f\n", (p_ptr.loc - initial_loc_).norm());
+    // }
+
+    // NormalizeWeights();
+
+    // index = 0;
+    // for (auto& p_ptr : particles_) {
+    //   printf("Particle %d: %lf\n", index++, p_ptr.weight);
+    // }
 
     num_updates -= 1;
 
     distance_travelled = distance_travelled_og;
     angle_travelled = angle_travelled_og;
+    do_update = 0;
   }
 
   if (num_updates <= 0)
   {
-    printf("\nRESAMPLE\n");
-    Resample();
+    // printf("\nRESAMPLE\n");
+    // Resample();
     num_updates = num_updates_og;
   }
 }
@@ -464,14 +507,20 @@ void ParticleFilter::Initialize(const string& map_file,
   map_.Load(map_file);
   printf("Initializing...\n");
   particles_.clear();
+  initial_loc_ = loc;
+  initial_angle_ = angle;
   double weight = 1.0 / num_initial_particles;
-  for (int i = 0; i < num_initial_particles; i++) {
+  particles_.emplace_back(loc[0], loc[1], angle, weight);
+  for (int i = 1; i < num_initial_particles; i++) {
     float x = rng_.Gaussian(loc(0), initial_std_x);
     float y = rng_.Gaussian(loc(1), initial_std_y);
     float theta = rng_.Gaussian(angle, initial_std_theta);
 
     particles_.emplace_back(x, y, theta, weight);
   }
+  initialized = 1;
+  do_update = 1;
+
 }
 
 void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr, 

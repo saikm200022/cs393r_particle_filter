@@ -112,6 +112,17 @@ class ParticleFilter {
 
   vector_map::VectorMap map_;
 
+    // maybe 50
+  int laser_point_trim = 10;
+
+  int do_update = 1;
+  int initialized = 0;
+  int draw_lines = 0;
+  Eigen::Vector2f initial_loc_;
+  float initial_angle_;
+
+  std::vector<Eigen::Vector2f> lines;
+
  private:
 
   // List of particles being tracked.
@@ -124,6 +135,8 @@ class ParticleFilter {
 
   // Previous odometry-reported locations.
   Eigen::Vector2f prev_odom_loc_;
+
+
   float prev_odom_angle_;
   bool odom_initialized_;
 
@@ -133,7 +146,10 @@ class ParticleFilter {
   const double initial_std_y = 1;
   const double initial_std_theta = 0.0 * M_PI / 12;
 
-  const double laser_x_offset = 0.2;
+  const double laser_x_offset = .18;
+  const double laser_y_offset = 0;
+
+
 
   int num_scans_predicted;
 
@@ -164,8 +180,7 @@ class ParticleFilter {
   float angle_travelled_og = .175; //.175 according to professor
   float angle_travelled = angle_travelled_og;
 
-  // maybe 50
-  int laser_point_trim = 10;
+
 
   int num_updates_og = 1000;
   int num_updates = num_updates_og;
