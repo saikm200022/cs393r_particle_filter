@@ -221,8 +221,8 @@ void ParticleFilter::Update(const vector<float>& ranges,
 
   std::sort(differences.begin(), differences.end());
 
-  int begin = differences.size() * 0.1;
-  int end   = differences.size() * 0.9;
+  int begin = differences.size() * 0.2;
+  int end   = differences.size() * 0.8;
 
   for (int i = begin; i < end; i++) {
     log_likelihood += pow(differences[i], 2) / pow(update_variance, 2);
@@ -243,11 +243,8 @@ void ParticleFilter::NormalizeWeights() {
   for (auto p : particles_) {
     if (p.weight > max && !fEquals(p.weight, 0.0))
       max = p.weight;
-          // printf("New weight: %lf\n",p.weight);
-
   }
 
-  // scale every weight
   for (auto& p : particles_) {
     p.weight -= max;
   }
@@ -311,12 +308,15 @@ void ParticleFilter::Resample() {
     // Uncomment for low variance resampling
     // if (total_time < 1)
     sample = rng_.UniformRandom(0, 1);
+
     int bin_index = SearchBins(bins, sample);
     if (bin_index == -1) {
       // Shouldn't be here
       printf("Bins are NaN\n");
       return;
     }
+
+    printf("Bin index: %d\n", bin_index);
 
     new_particles.emplace_back(particles_[bin_index]);
 
@@ -419,7 +419,7 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
       // For x, y positions and angle sample Gaussian centered around next positive with odometry and std deviation k * odometry
       float next_x = rng_.Gaussian(T_map[0], k * abs(translation[0]));
       float next_y = rng_.Gaussian(T_map[1], k * abs(translation[1]));
-      float next_theta = rng_.Gaussian(theta_map, k *  abs(delta_theta_bl));
+      float next_theta = rng_.Gaussian(theta_map, k * abs(delta_theta_bl));
       // float next_theta = rng_.Gaussian(theta_map, 0);
 
       particles_[i].loc[0] = next_x;

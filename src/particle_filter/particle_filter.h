@@ -111,7 +111,7 @@ class ParticleFilter {
   Particle KMeansClustering(int k, float x_init, float y_init) const;
 
   vector_map::VectorMap map_;
-  int laser_point_trim = 1;
+  int laser_point_trim = 10;
 
 
  private:
@@ -129,13 +129,13 @@ class ParticleFilter {
   float prev_odom_angle_;
   bool odom_initialized_;
 
-  const int num_initial_particles = 50;
+  const int num_initial_particles = 100;
 
   const double initial_std_x = 0.2;
   const double initial_std_y = 0.2;
   const double initial_std_theta = M_PI / 12;
 
-  const double laser_x_offset = 0.18;
+  const double laser_x_offset = 0.21;
 
   int num_scans_predicted;
 
@@ -146,7 +146,7 @@ class ParticleFilter {
   // Account for correlation between rays on update step
   // 1    -> no correlation
   // 1/n  -> perfect correlation (n = number of rays)
-  double gamma = 1 / 50.0;
+  double gamma = 1 / 500.0;
 
   int visualize_particle_filter = 1;
 
@@ -167,7 +167,7 @@ class ParticleFilter {
   float angle_travelled = angle_travelled_og;
 
 
-  int num_updates_og = 5;
+  int num_updates_og = 10;
   int num_updates = num_updates_og;
 
   Eigen::Vector2f d_short = Eigen::Vector2f(2, 2);
