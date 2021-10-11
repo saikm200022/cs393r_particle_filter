@@ -243,8 +243,6 @@ void ParticleFilter::NormalizeWeights() {
   for (auto p : particles_) {
     if (p.weight > max && !fEquals(p.weight, 0.0))
       max = p.weight;
-          // printf("New weight: %lf\n",p.weight);
-
   }
 
   // scale every weight
@@ -363,11 +361,6 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     distance_travelled = distance_travelled_og;
     angle_travelled = angle_travelled_og;
   }
-  else{
-    for (auto& p : particles_) {
-      p.weight = 1.0 / (float)particles_.size();
-    }
-  }
 
   if (num_updates <= 0)
   {
@@ -375,6 +368,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     Resample();
     num_updates = num_updates_og;
   }
+
 }
 
 void ParticleFilter::Predict(const Vector2f& odom_loc,
@@ -476,7 +470,7 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
     }
 
     double size = (double)particles_.size();
-    if (total_time % 1000000000 == 0)
+    if (total_time % 200 == 0)
     {
       Particle location = KMeansClustering(3, x_sum/size, y_sum/size);
       loc = location.loc;
